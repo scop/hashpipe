@@ -13,6 +13,15 @@ DEFAULT_ALGORITHM = "sha1"
 __REGEX_TYPE = type(re.compile(b"."))
 
 
+if hasattr(hmac, "digest"):
+    # Faster hmac.digest is available in Python 3.7+
+    def hmac_hexdigest(key: bytes, msg: bytes, digest: str) -> str:
+        return hmac.digest(key, msg, digest).hex()
+else:
+    def hmac_hexdigest(key: bytes, msg: bytes, digest: str) -> str:
+        return hmac.new(key, msg, digest).hexdigest()
+
+
 def hash_matches(
         regex: __REGEX_TYPE, data: bytes, key: bytes = b"",
         algorithm: str = DEFAULT_ALGORITHM, prefix: bytes = b"") -> bytes:
@@ -33,11 +42,10 @@ def hash_matches(
             data = match.group(0)
             pre = post = b""
 
-        hmac_ = hmac.new(key, data, algorithm)
         return b"%s<%s%s>%s" % (
             pre,
             prefix,
-            hmac_.hexdigest().encode(),
+            hmac_hexdigest(key, data, algorithm).encode(),
             post)
 
     return regex.sub(_replace, data)
