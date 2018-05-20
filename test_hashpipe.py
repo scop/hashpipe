@@ -1,6 +1,4 @@
-"""
-hashpipe tests.
-"""
+"""hashpipe tests."""
 
 import re
 
@@ -12,10 +10,7 @@ def _format_hash(hash_: bytes, prefix: bytes = b"") -> bytes:
 
 
 def test_ref_nongrouping():
-    """
-    Test reference hashes, with non-grouping regexes.
-    """
-
+    """Test reference hashes, with non-grouping regexes."""
     cases = [
         # https://en.wikipedia.org/wiki/HMAC#Examples
         {
@@ -128,9 +123,7 @@ def test_ref_nongrouping():
 
 
 def test_grouping():
-    """
-    Test grouping replacements.
-    """
+    """Test grouping replacements."""
     cases = [
         {
             "key": bytes.fromhex("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"),
@@ -166,10 +159,7 @@ def test_grouping():
 
 
 def test_prefixing():
-    """
-    Test prefixing.
-    """
-
+    """Test prefixing."""
     for prefix in b"foo", b"foo:", b"":
         assert hash_matches(
             algorithm="md5", regex=re.compile(b".*"),

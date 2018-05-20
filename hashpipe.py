@@ -1,8 +1,6 @@
 #!/usr/bin/python3 -u
 
-"""
-Regular expression match hasher utility.
-"""
+"""Regular expression match hasher utility."""
 
 import argparse
 import hashlib
@@ -23,11 +21,8 @@ def hash_matches(
     their HMAC hex digests surrounded by angle brackets, using the given
     algorithm, optionally prefixing them with the given prefix.
     """
-
     def _replace(match):
-        """
-        Process a match.
-        """
+        """Process a match."""
         if match.groups():
             # hash first group
             data = match.group(1)
@@ -50,7 +45,6 @@ def hash_matches(
 
 def main() -> None:
     """Main entry point."""
-
     parser = argparse.ArgumentParser(
         description="Read stdin line by line, hash regex matches, and " +
         "output the result to stdout")
