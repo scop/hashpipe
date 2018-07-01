@@ -17,7 +17,7 @@ if hasattr(hmac, "digest"):
     # Faster (for our purposes) hmac.digest is available in Python 3.7+
     def hmac_hexdigest(key: bytes, msg: bytes, digest: str) -> str:
         """Create HMAC hex digest."""
-        return hmac.digest(key, msg, digest).hex()
+        return hmac.digest(key, msg, digest).hex()  # pylint: disable=no-member
 else:
     def hmac_hexdigest(key: bytes, msg: bytes, digest: str) -> str:
         """Create HMAC hex digest."""
