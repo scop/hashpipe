@@ -3,6 +3,7 @@
 """Regular expression match hasher utility."""
 
 import argparse
+import functools
 import hashlib
 import hmac
 import re
@@ -10,48 +11,55 @@ import sys
 
 
 DEFAULT_ALGORITHM = "sha1"
-__REGEX_TYPE = type(re.compile(b"."))
+_REGEX_TYPE = type(re.compile(b"."))
 
 
-if hasattr(hmac, "digest"):
-    # Faster (for our purposes) hmac.digest is available in Python 3.7+
-    def hmac_hexdigest(key: bytes, msg: bytes, digest: str) -> str:
-        """Create HMAC hex digest."""
-        return hmac.digest(key, msg, digest).hex()  # pylint: disable=no-member
-else:
-    import functools
+class Hashpipe(object):  # pylint: disable=too-few-public-methods
+    """Hash pipe."""
 
-    def hmac_hexdigest(key: bytes, msg: bytes, digest: str) -> str:
-        """Create HMAC hex digest."""
-        constructor = functools.partial(hashlib.new, digest)
-        return hmac.new(key, msg, constructor).hexdigest()
-
-
-def hash_matches(
-        regex: __REGEX_TYPE, data: bytes, key: bytes = b"",
-        algorithm: str = DEFAULT_ALGORITHM, prefix: bytes = b"") -> bytes:
-    """
-    Hash matches.
-
-    Replace the first groups of regular expression matches in given text with
-    their HMAC hex digests surrounded by angle brackets, using the given
-    algorithm, optionally prefixing them with the given prefix.
-    """
-    def _replace(match):
-        """Process a match."""
-        if match.groups():
-            # hash first group
-            data = match.group(1)
-            pre = match.string[match.start(0):match.start(1)]
-            post = match.string[match.end(1):match.end(0)]
+    def __init__(self, algorithm: str = DEFAULT_ALGORITHM) -> None:
+        """Create new Hashpipe using given digest algorithm."""
+        if hasattr(hmac, "digest"):
+            # Optimize for CPython 3.7+: use hmac.digest with str digestmod
+            self._digestmod = algorithm
+            self.hexdigest = self._hexdigest_hmac_digest
         else:
-            # hash entire match
-            data = match.group(0)
-            pre = post = b""
-        digest = hmac_hexdigest(key, data, algorithm).encode()
-        return pre + b"<" + prefix + digest + b">" + post
+            # Try getattr for faster direct constructor access than .new
+            self._digestmod = getattr(
+                hashlib, algorithm, functools.partial(hashlib.new, algorithm))
+            self.hexdigest = self._hexdigest_hmac_new
 
-    return regex.sub(_replace, data)
+    def _hexdigest_hmac_new(self, key: bytes, msg: bytes) -> str:
+        return hmac.new(key, msg, self._digestmod).hexdigest()
+
+    def _hexdigest_hmac_digest(self, key, msg) -> str:
+        return hmac.digest(  # 3.7+ pylint: disable=no-member
+            key, msg, self._digestmod).hex()
+
+    def hash_matches(self, regex: _REGEX_TYPE, data: bytes, key: bytes = b"",
+                     prefix: bytes = b"") -> bytes:
+        """
+        Hash matches.
+
+        Replace the first groups of regular expression matches in given text
+        with their HMAC hex digests surrounded by angle brackets, using the
+        given algorithm, optionally prefixing them with the given prefix.
+        """
+        def _replace(match):
+            """Process a match."""
+            if match.groups():
+                # hash first group
+                data = match.group(1)
+                pre = match.string[match.start(0):match.start(1)]
+                post = match.string[match.end(1):match.end(0)]
+            else:
+                # hash entire match
+                data = match.group(0)
+                pre = post = b""
+            digest = self.hexdigest(key, data).encode()
+            return pre + b"<" + prefix + digest + b">" + post
+
+        return regex.sub(_replace, data)
 
 
 def main() -> None:
@@ -78,7 +86,7 @@ def main() -> None:
                         help="Digest algorithm to use, one of: %s" %
                         ", ".join(sorted(avail, key=lambda x: x.lower())))
 
-    def regex(arg: str) -> __REGEX_TYPE:
+    def regex(arg: str) -> _REGEX_TYPE:
         """Convert argument to compiled regex."""
         try:
             return re.compile(str.encode(arg))
@@ -89,10 +97,12 @@ def main() -> None:
 
     args = parser.parse_args()
 
+    hashpipe = Hashpipe(args.algorithm)
+
     for line in sys.stdin.buffer:
         sys.stdout.buffer.write(
-            hash_matches(algorithm=args.algorithm, regex=args.regex,
-                         data=line, key=args.key, prefix=args.prefix))
+            hashpipe.hash_matches(
+                regex=args.regex, data=line, key=args.key, prefix=args.prefix))
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 
 import re
 
-from hashpipe import hash_matches
+from hashpipe import Hashpipe
 
 
 def _format_hash(hash_: bytes, prefix: bytes = b"") -> bytes:
@@ -127,9 +127,9 @@ def test_ref_nongrouping():
 
     for case in cases:
         for algorithm, hash_ in case["hashes"].items():
-            assert hash_matches(
-                algorithm=algorithm, regex=case["regex"],
-                data=case["data"], key=case["key"],
+            hashpipe = Hashpipe(algorithm=algorithm)
+            assert hashpipe.hash_matches(
+                regex=case["regex"], data=case["data"], key=case["key"],
             ) == _format_hash(hash_)
 
 
@@ -163,16 +163,16 @@ def test_grouping():
     ]
 
     for case in cases:
-        assert hash_matches(
-            algorithm=case["algorithm"], regex=case["regex"],
-            data=case["data"], key=case["key"],
+        hashpipe = Hashpipe(algorithm=case["algorithm"])
+        assert hashpipe.hash_matches(
+            regex=case["regex"], data=case["data"], key=case["key"],
         ) == case["result"]
 
 
 def test_prefixing():
     """Test prefixing."""
     for prefix in b"foo", b"foo:", b"":
-        assert hash_matches(
-            algorithm="md5", regex=re.compile(b".*"),
-            data=b"", key=b"", prefix=prefix,
+        hashpipe = Hashpipe(algorithm="md5")
+        assert hashpipe.hash_matches(
+            regex=re.compile(b".*"), data=b"", key=b"", prefix=prefix,
         ) == _format_hash(b"74e6f7298a9c2d168935f58c001bad88", prefix=prefix)
