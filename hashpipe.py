@@ -16,9 +16,11 @@ __REGEX_TYPE = type(re.compile(b"."))
 if hasattr(hmac, "digest"):
     # Faster hmac.digest is available in Python 3.7+
     def hmac_hexdigest(key: bytes, msg: bytes, digest: str) -> str:
+        """Create HMAC hex digest."""
         return hmac.digest(key, msg, digest).hex()
 else:
     def hmac_hexdigest(key: bytes, msg: bytes, digest: str) -> str:
+        """Create HMAC hex digest."""
         return hmac.new(key, msg, digest).hexdigest()
 
 
@@ -26,6 +28,8 @@ def hash_matches(
         regex: __REGEX_TYPE, data: bytes, key: bytes = b"",
         algorithm: str = DEFAULT_ALGORITHM, prefix: bytes = b"") -> bytes:
     """
+    Hash matches.
+
     Replace the first groups of regular expression matches in given text with
     their HMAC hex digests surrounded by angle brackets, using the given
     algorithm, optionally prefixing them with the given prefix.
@@ -52,7 +56,7 @@ def hash_matches(
 
 
 def main() -> None:
-    """Main entry point."""
+    """Run main entry point."""
     parser = argparse.ArgumentParser(
         description="Read stdin line by line, hash regex matches, and " +
         "output the result to stdout")
