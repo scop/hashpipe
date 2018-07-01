@@ -14,7 +14,7 @@ __REGEX_TYPE = type(re.compile(b"."))
 
 
 if hasattr(hmac, "digest"):
-    # Faster hmac.digest is available in Python 3.7+
+    # Faster (for our purposes) hmac.digest is available in Python 3.7+
     def hmac_hexdigest(key: bytes, msg: bytes, digest: str) -> str:
         """Create HMAC hex digest."""
         return hmac.digest(key, msg, digest).hex()
