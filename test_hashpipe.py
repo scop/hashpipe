@@ -6,7 +6,7 @@ from hashpipe import hash_matches
 
 
 def _format_hash(hash_: bytes, prefix: bytes = b"") -> bytes:
-    return b"<%s%s>" % (prefix, hash_)
+    return b"<" + prefix + hash_ + b">"
 
 
 def test_ref_nongrouping():
@@ -141,24 +141,24 @@ def test_grouping():
             "data": b"Well, Hi There!",
             "regex": re.compile(br"Well, (Hi There)"),
             "algorithm": "md5",
-            "result": b"Well, %s!" % _format_hash(
-                b"9294727a3638bb1c13f48ef8158bfc9d"),
+            "result": ("Well, %s!" % _format_hash(
+                b"9294727a3638bb1c13f48ef8158bfc9d").decode()).encode()
         },
         {
             "key": bytes.fromhex("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"),
             "data": b"Well, Hi There!",
             "regex": re.compile(br"(?P<name_ignored>Hi There)"),
             "algorithm": "md5",
-            "result": b"Well, %s!" % _format_hash(
-                b"9294727a3638bb1c13f48ef8158bfc9d"),
+            "result": ("Well, %s!" % _format_hash(
+                b"9294727a3638bb1c13f48ef8158bfc9d").decode()).encode()
         },
         {
             "key": bytes.fromhex("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"),
             "data": b"Well, Hi There!",
             "regex": re.compile(br"\b(Hi There)\b"),
             "algorithm": "sha1",
-            "result": b"Well, %s!" % _format_hash(
-                b"b617318655057264e28bc0b6fb378c8ef146be00"),
+            "result": ("Well, %s!" % _format_hash(
+                b"b617318655057264e28bc0b6fb378c8ef146be00").decode()).encode()
         },
     ]
 

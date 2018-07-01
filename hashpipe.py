@@ -45,12 +45,8 @@ def hash_matches(
             # hash entire match
             data = match.group(0)
             pre = post = b""
-
-        return b"%s<%s%s>%s" % (
-            pre,
-            prefix,
-            hmac_hexdigest(key, data, algorithm).encode(),
-            post)
+        digest = hmac_hexdigest(key, data, algorithm).encode()
+        return pre + b"<" + prefix + digest + b">" + post
 
     return regex.sub(_replace, data)
 
