@@ -19,9 +19,12 @@ if hasattr(hmac, "digest"):
         """Create HMAC hex digest."""
         return hmac.digest(key, msg, digest).hex()  # pylint: disable=no-member
 else:
+    import functools
+
     def hmac_hexdigest(key: bytes, msg: bytes, digest: str) -> str:
         """Create HMAC hex digest."""
-        return hmac.new(key, msg, digest).hexdigest()
+        constructor = functools.partial(hashlib.new, digest)
+        return hmac.new(key, msg, constructor).hexdigest()
 
 
 def hash_matches(
