@@ -14,7 +14,7 @@ DEFAULT_ALGORITHM = "sha1"
 _REGEX_TYPE = type(re.compile(b"."))
 
 
-class Hashpipe(object):  # pylint: disable=too-few-public-methods
+class Hashpipe:  # pylint: disable=too-few-public-methods
     """Hash pipe."""
 
     def __init__(self, algorithm: str = DEFAULT_ALGORITHM) -> None:
