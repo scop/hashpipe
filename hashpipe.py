@@ -8,10 +8,11 @@ import hashlib
 import hmac
 import re
 import sys
+from typing import List  # noqa: F401 pylint: disable=unused-import
+from typing import Match, Pattern
 
 
 DEFAULT_ALGORITHM = "sha1"
-_REGEX_TYPE = type(re.compile(b"."))
 
 
 class Hashpipe:  # pylint: disable=too-few-public-methods
@@ -32,12 +33,12 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
     def _hexdigest_hmac_new(self, key: bytes, msg: bytes) -> str:
         return hmac.new(key, msg, self._digestmod).hexdigest()
 
-    def _hexdigest_hmac_digest(self, key, msg) -> str:
+    def _hexdigest_hmac_digest(self, key: bytes, msg: bytes) -> str:
         return hmac.digest(  # 3.7+ pylint: disable=no-member
             key, msg, self._digestmod).hex()
 
-    def hash_matches(self, regex: _REGEX_TYPE, data: bytes, key: bytes = b"",
-                     prefix: bytes = b"") -> bytes:
+    def hash_matches(self, regex: Pattern[bytes], data: bytes,
+                     key: bytes = b"", prefix: bytes = b"") -> bytes:
         """
         Hash matches.
 
@@ -45,7 +46,7 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
         with their HMAC hex digests surrounded by angle brackets, using the
         given algorithm, optionally prefixing them with the given prefix.
         """
-        def _replace(match):
+        def _replace(match: Match[bytes]) -> bytes:
             """Process a match."""
             if match.groups():
                 # hash first group
@@ -75,7 +76,7 @@ def main() -> None:
                         help="Prefix to add in replacements")
 
     # weed out uppercase variants where lowercase exists from available
-    avail = []
+    avail = []  # type: List[str]
     for algo in hashlib.algorithms_available:
         if "with" in algo.lower():
             continue  # skip apparently redundant ones
@@ -86,7 +87,7 @@ def main() -> None:
                         help="Digest algorithm to use, one of: %s" %
                         ", ".join(sorted(avail, key=lambda x: x.lower())))
 
-    def regex(arg: str) -> _REGEX_TYPE:
+    def regex(arg: str) -> Pattern[bytes]:
         """Convert argument to compiled regex."""
         try:
             return re.compile(str.encode(arg))

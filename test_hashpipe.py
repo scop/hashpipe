@@ -9,7 +9,7 @@ def _format_hash(hash_: bytes, prefix: bytes = b"") -> bytes:
     return b"<" + prefix + hash_ + b">"
 
 
-def test_ref_nongrouping():
+def test_ref_nongrouping() -> None:
     """Test reference hashes, with non-grouping regexes."""
     cases = [
         # https://en.wikipedia.org/wiki/HMAC#Examples
@@ -133,7 +133,7 @@ def test_ref_nongrouping():
             ) == _format_hash(hash_)
 
 
-def test_grouping():
+def test_grouping() -> None:
     """Test grouping replacements."""
     cases = [
         {
@@ -169,7 +169,7 @@ def test_grouping():
         ) == case["result"]
 
 
-def test_prefixing():
+def test_prefixing() -> None:
     """Test prefixing."""
     for prefix in b"foo", b"foo:", b"":
         hashpipe = Hashpipe(algorithm="md5")
