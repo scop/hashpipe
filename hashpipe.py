@@ -35,7 +35,7 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
         return hmac.new(key, msg, self._digestmod).hexdigest()
 
     def _hexdigest_hmac_digest(self, key: bytes, msg: bytes) -> str:
-        return hmac.digest(  # 3.7+ pylint: disable=no-member
+        return hmac.digest(  # type: ignore # pylint: disable=no-member # 3.7+
             key, msg, self._digestmod).hex()
 
     def hash_matches(self, regex: Pattern[bytes], data: bytes,
