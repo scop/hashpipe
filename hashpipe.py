@@ -12,6 +12,7 @@ from typing import List  # noqa: F401 pylint: disable=unused-import
 from typing import Match, Pattern
 
 
+__version__ = "0.9.0"
 DEFAULT_ALGORITHM = "sha1"
 
 
