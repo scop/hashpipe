@@ -1,6 +1,6 @@
 #!/usr/bin/python3 -u
 
-"""Regular expression match hasher utility."""
+"""Regular expression match hasher."""
 
 import argparse
 import functools
