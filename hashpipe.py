@@ -38,7 +38,7 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
         return hmac.digest(  # type: ignore # pylint: disable=no-member # 3.7+
             key, msg, self._digestmod).hex()
 
-    def hash_matches(self, regex: Pattern[bytes], data: bytes,
+    def hash_matches(self, pattern: Pattern[bytes], data: bytes,
                      key: bytes = b"", prefix: bytes = b"") -> bytes:
         """
         Hash matches.
@@ -61,7 +61,7 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
             digest = self.hexdigest(key, data).encode()
             return pre + b"<" + prefix + digest + b">" + post
 
-        return regex.sub(_replace, data)
+        return pattern.sub(_replace, data)
 
 
 def main() -> None:
@@ -88,13 +88,13 @@ def main() -> None:
                         help="Digest algorithm to use, one of: %s" %
                         ", ".join(sorted(avail, key=lambda x: x.lower())))
 
-    def regex(arg: str) -> Pattern[bytes]:
-        """Convert argument to compiled regex."""
+    def pattern(arg: str) -> Pattern[bytes]:
+        """Convert argument to compiled pattern."""
         try:
             return re.compile(str.encode(arg))
         except BaseException:
             raise argparse.ArgumentError
-    parser.add_argument("regex", type=regex, metavar="REGEX",
+    parser.add_argument("regex", type=pattern, metavar="REGEX",
                         help="Regular expression to match")
 
     args = parser.parse_args()
@@ -103,8 +103,8 @@ def main() -> None:
 
     for line in sys.stdin.buffer:
         sys.stdout.buffer.write(
-            hashpipe.hash_matches(
-                regex=args.regex, data=line, key=args.key, prefix=args.prefix))
+            hashpipe.hash_matches(pattern=args.regex, data=line,
+                                  key=args.key, prefix=args.prefix))
 
 
 if __name__ == "__main__":
