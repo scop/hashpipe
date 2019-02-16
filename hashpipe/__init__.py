@@ -84,8 +84,8 @@ def main() -> None:
         description="Read stdin line by line, hash regex matches, and " +
         "output the result to stdout")
 
-    parser.add_argument("-k", "--key", type=str.encode, default=b"",
-                        help="HMAC key, default is empty")
+    parser.add_argument("-k", "--key", type=bytes.fromhex, default=b"",
+                        help="HMAC key hex encoded, default is empty")
 
     parser.add_argument("-p", "--prefix", type=str.encode, default=b"",
                         help="Prefix to add in replacements")
