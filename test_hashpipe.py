@@ -6,6 +6,8 @@ from io import BytesIO
 from typing import Dict, NamedTuple, Pattern
 from unittest.mock import patch
 
+import pytest
+
 from hashpipe import Hashpipe
 from hashpipe.__main__ import main
 
@@ -272,3 +274,9 @@ def test_prefixing() -> None:
         ):
             main(in_=(b"",), out=outbuf)
         assert outbuf.getvalue() == expected
+
+
+def test_invalid_cli_regex() -> None:
+    with pytest.raises(SystemExit, match="^[^0]*$"):
+        with patch("sys.argv", [__file__, "***"]):
+            main()
