@@ -96,6 +96,13 @@ def main(
     )
 
     parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version="hashpipe %s" % __version__,
+    )
+
+    parser.add_argument(
         "-k",
         "--key",
         type=bytes.fromhex,
