@@ -21,6 +21,8 @@ matrix:
     - python: "pypy3.5"
       env: TOXENV=pypy3
     - python: "3.7"
-      env: TOXENV=lint
+      env: TOXENV=lint SKIP_CODECOV=true
 install: pip install -U tox
 script: tox
+after_success:
+  - test "$SKIP_CODECOV" = true || { pip install codecov && codecov -X gcov; }
