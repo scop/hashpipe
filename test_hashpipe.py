@@ -16,12 +16,15 @@ def _format_hash(hash_: bytes, prefix: bytes = b"") -> bytes:
 
 def test_ref_nongrouping() -> None:
     """Test reference hashes, with non-grouping regexes."""
-    TestCase = NamedTuple("TestCase", [
-        ("key", bytes),
-        ("data", bytes),
-        ("pattern", Pattern[bytes]),
-        ("hashes", Dict[str, bytes]),
-    ])
+    TestCase = NamedTuple(
+        "TestCase",
+        [
+            ("key", bytes),
+            ("data", bytes),
+            ("pattern", Pattern[bytes]),
+            ("hashes", Dict[str, bytes]),
+        ],
+    )
 
     cases = (
         # https://en.wikipedia.org/wiki/HMAC#Examples
@@ -32,8 +35,10 @@ def test_ref_nongrouping() -> None:
             hashes=dict(
                 md5=b"74e6f7298a9c2d168935f58c001bad88",
                 sha1=b"fbdb1d1b18aa6c08324b7d64b71fb76370690e1d",
-                sha256=(b"b613679a0814d9ec772f95d778c35fc5"
-                        b"ff1697c493715653c6c712144292c5ad"),
+                sha256=(
+                    b"b613679a0814d9ec772f95d778c35fc5"
+                    b"ff1697c493715653c6c712144292c5ad"
+                ),
             ),
         ),
         TestCase(
@@ -43,27 +48,24 @@ def test_ref_nongrouping() -> None:
             hashes=dict(
                 md5=b"80070713463e7749b90c2dc24911e275",
                 sha1=b"de7c9b85b8b78aa6bc8a7a36f70a90701c9db4d9",
-                sha256=(b"f7bc83f430538424b13298e6aa6fb143"
-                        b"ef4d59a14946175997479dbc2d1a3cd8"),
+                sha256=(
+                    b"f7bc83f430538424b13298e6aa6fb143"
+                    b"ef4d59a14946175997479dbc2d1a3cd8"
+                ),
             ),
         ),
-
         # https://tools.ietf.org/html/rfc2202
         TestCase(
             key=bytes.fromhex("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"),
             data=b"Hi There",
             pattern=re.compile(b".+"),
-            hashes=dict(
-                md5=b"9294727a3638bb1c13f48ef8158bfc9d",
-            ),
+            hashes=dict(md5=b"9294727a3638bb1c13f48ef8158bfc9d"),
         ),
         TestCase(
             key=bytes.fromhex("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"),
             data=b"Hi There",
             pattern=re.compile(b".+"),
-            hashes=dict(
-                sha1=b"b617318655057264e28bc0b6fb378c8ef146be00",
-            ),
+            hashes=dict(sha1=b"b617318655057264e28bc0b6fb378c8ef146be00"),
         ),
         TestCase(
             key=b"Jefe",
@@ -78,21 +80,18 @@ def test_ref_nongrouping() -> None:
             key=bytes.fromhex("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
             data=bytes.fromhex("dd" * 50),
             pattern=re.compile(b".+"),
-            hashes=dict(
-                md5=b"56be34521d144c88dbb8c733f0e8b3f6",
-            ),
+            hashes=dict(md5=b"56be34521d144c88dbb8c733f0e8b3f6"),
         ),
         TestCase(
             key=bytes.fromhex("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
             data=bytes.fromhex("dd" * 50),
             pattern=re.compile(b".+"),
-            hashes=dict(
-                sha1=b"125d7342b9ac11cd91a39af48aa17b4f63f175d3",
-            ),
+            hashes=dict(sha1=b"125d7342b9ac11cd91a39af48aa17b4f63f175d3"),
         ),
         TestCase(
             key=bytes.fromhex(
-                "0102030405060708090a0b0c0d0e0f10111213141516171819"),
+                "0102030405060708090a0b0c0d0e0f10111213141516171819"
+            ),
             data=bytes.fromhex("cd" * 50),
             pattern=re.compile(b".+"),
             hashes=dict(
@@ -104,17 +103,13 @@ def test_ref_nongrouping() -> None:
             key=bytes.fromhex("0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c"),
             data=b"Test With Truncation",
             pattern=re.compile(b".+"),
-            hashes=dict(
-                md5=b"56461ef2342edc00f9bab995690efd4c",
-            ),
+            hashes=dict(md5=b"56461ef2342edc00f9bab995690efd4c"),
         ),
         TestCase(
             key=bytes.fromhex("0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c"),
             data=b"Test With Truncation",
             pattern=re.compile(b".+"),
-            hashes=dict(
-                sha1=b"4c1a03424b55e07fe7f27be1d58bb9324a9a5a04",
-            ),
+            hashes=dict(sha1=b"4c1a03424b55e07fe7f27be1d58bb9324a9a5a04"),
         ),
         TestCase(
             key=bytes.fromhex("aa" * 80),
@@ -127,8 +122,10 @@ def test_ref_nongrouping() -> None:
         ),
         TestCase(
             key=bytes.fromhex("aa" * 80),
-            data=(b"Test Using Larger Than Block-Size Key "
-                  b"and Larger Than One Block-Size Data"),
+            data=(
+                b"Test Using Larger Than Block-Size Key "
+                b"and Larger Than One Block-Size Data"
+            ),
             pattern=re.compile(b".+"),
             hashes=dict(
                 md5=b"6f630fad67cda0ee1fb1f562db3aa53e",
@@ -143,28 +140,41 @@ def test_ref_nongrouping() -> None:
             expected = _format_hash(hash_)
 
             hashpipe = Hashpipe(algorithm=algorithm)
-            assert hashpipe.hash_matches(
-                pattern=case.pattern, data=case.data, key=case.key,
-            ) == expected
+            assert (
+                hashpipe.hash_matches(
+                    pattern=case.pattern, data=case.data, key=case.key
+                )
+                == expected
+            )
 
             outbuf = BytesIO()
-            with patch("sys.argv", [__file__,
-                                    "-k", hexlify(case.key).decode(),
-                                    "-a", algorithm,
-                                    case.pattern.pattern.decode()]):
+            with patch(
+                "sys.argv",
+                [
+                    __file__,
+                    "-k",
+                    hexlify(case.key).decode(),
+                    "-a",
+                    algorithm,
+                    case.pattern.pattern.decode(),
+                ],
+            ):
                 main(in_=(case.data,), out=outbuf)
             assert outbuf.getvalue() == expected
 
 
 def test_grouping() -> None:
     """Test grouping replacements."""
-    TestCase = NamedTuple("TestCase", [
-        ("key", bytes),
-        ("data", bytes),
-        ("pattern", Pattern[bytes]),
-        ("algorithm", str),
-        ("result", bytes),
-    ])
+    TestCase = NamedTuple(
+        "TestCase",
+        [
+            ("key", bytes),
+            ("data", bytes),
+            ("pattern", Pattern[bytes]),
+            ("algorithm", str),
+            ("result", bytes),
+        ],
+    )
 
     cases = (
         TestCase(
@@ -172,40 +182,57 @@ def test_grouping() -> None:
             data=b"Well, Hi There!",
             pattern=re.compile(br"Well, (Hi There)"),
             algorithm="md5",
-            result=("Well, %s!" % _format_hash(
-                b"9294727a3638bb1c13f48ef8158bfc9d").decode()).encode(),
+            result=(
+                "Well, %s!"
+                % _format_hash(b"9294727a3638bb1c13f48ef8158bfc9d").decode()
+            ).encode(),
         ),
         TestCase(
             key=bytes.fromhex("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"),
             data=b"Well, Hi There!",
             pattern=re.compile(br"(?P<name_ignored>Hi There)"),
             algorithm="md5",
-            result=("Well, %s!" % _format_hash(
-                b"9294727a3638bb1c13f48ef8158bfc9d").decode()).encode(),
+            result=(
+                "Well, %s!"
+                % _format_hash(b"9294727a3638bb1c13f48ef8158bfc9d").decode()
+            ).encode(),
         ),
         TestCase(
             key=bytes.fromhex("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"),
             data=b"Well, Hi There!",
             pattern=re.compile(br"\b(Hi There)\b"),
             algorithm="sha1",
-            result=("Well, %s!" % _format_hash(
-                b"b617318655057264e28bc0b6fb378c8ef146be00"
-            ).decode()).encode(),
+            result=(
+                "Well, %s!"
+                % _format_hash(
+                    b"b617318655057264e28bc0b6fb378c8ef146be00"
+                ).decode()
+            ).encode(),
         ),
     )
 
     for case in cases:
 
         hashpipe = Hashpipe(algorithm=case.algorithm)
-        assert hashpipe.hash_matches(
-            pattern=case.pattern, data=case.data, key=case.key,
-        ) == case.result
+        assert (
+            hashpipe.hash_matches(
+                pattern=case.pattern, data=case.data, key=case.key
+            )
+            == case.result
+        )
 
         outbuf = BytesIO()
-        with patch("sys.argv", [__file__,
-                                "-k", hexlify(case.key).decode(),
-                                "-a", case.algorithm,
-                                case.pattern.pattern.decode()]):
+        with patch(
+            "sys.argv",
+            [
+                __file__,
+                "-k",
+                hexlify(case.key).decode(),
+                "-a",
+                case.algorithm,
+                case.pattern.pattern.decode(),
+            ],
+        ):
             main(in_=(case.data,), out=outbuf)
         assert outbuf.getvalue() == case.result
 
@@ -218,18 +245,30 @@ def test_prefixing() -> None:
         data = b""
         key = b""
         expected = _format_hash(
-            b"74e6f7298a9c2d168935f58c001bad88", prefix=prefix)
+            b"74e6f7298a9c2d168935f58c001bad88", prefix=prefix
+        )
 
         hashpipe = Hashpipe(algorithm=algorithm)
-        assert hashpipe.hash_matches(
-            pattern=re.compile(b".*"), data=data, key=key, prefix=prefix,
-        ) == expected
+        assert (
+            hashpipe.hash_matches(
+                pattern=re.compile(b".*"), data=data, key=key, prefix=prefix
+            )
+            == expected
+        )
 
         outbuf = BytesIO()
-        with patch("sys.argv", [__file__,
-                                "-k", hexlify(key).decode(),
-                                "-a", algorithm,
-                                "-p", prefix.decode(),
-                                ".*"]):
+        with patch(
+            "sys.argv",
+            [
+                __file__,
+                "-k",
+                hexlify(key).decode(),
+                "-a",
+                algorithm,
+                "-p",
+                prefix.decode(),
+                ".*",
+            ],
+        ):
             main(in_=(b"",), out=outbuf)
         assert outbuf.getvalue() == expected
