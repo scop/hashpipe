@@ -1,9 +1,13 @@
 """hashpipe tests."""
 
 import re
+from binascii import hexlify
+from io import BytesIO
 from typing import Dict, NamedTuple, Pattern
+from unittest.mock import patch
 
 from hashpipe import Hashpipe
+from hashpipe.__main__ import main
 
 
 def _format_hash(hash_: bytes, prefix: bytes = b"") -> bytes:
@@ -135,10 +139,21 @@ def test_ref_nongrouping() -> None:
 
     for case in cases:
         for algorithm, hash_ in case.hashes.items():
+
+            expected = _format_hash(hash_)
+
             hashpipe = Hashpipe(algorithm=algorithm)
             assert hashpipe.hash_matches(
                 pattern=case.pattern, data=case.data, key=case.key,
-            ) == _format_hash(hash_)
+            ) == expected
+
+            outbuf = BytesIO()
+            with patch("sys.argv", [__file__,
+                                    "-k", hexlify(case.key).decode(),
+                                    "-a", algorithm,
+                                    case.pattern.pattern.decode()]):
+                main(in_=(case.data,), out=outbuf)
+            assert outbuf.getvalue() == expected
 
 
 def test_grouping() -> None:
@@ -180,16 +195,41 @@ def test_grouping() -> None:
     )
 
     for case in cases:
+
         hashpipe = Hashpipe(algorithm=case.algorithm)
         assert hashpipe.hash_matches(
             pattern=case.pattern, data=case.data, key=case.key,
         ) == case.result
 
+        outbuf = BytesIO()
+        with patch("sys.argv", [__file__,
+                                "-k", hexlify(case.key).decode(),
+                                "-a", case.algorithm,
+                                case.pattern.pattern.decode()]):
+            main(in_=(case.data,), out=outbuf)
+        assert outbuf.getvalue() == case.result
+
 
 def test_prefixing() -> None:
     """Test prefixing."""
     for prefix in b"foo", b"foo:", b"":
-        hashpipe = Hashpipe(algorithm="md5")
+
+        algorithm = "md5"
+        data = b""
+        key = b""
+        expected = _format_hash(
+            b"74e6f7298a9c2d168935f58c001bad88", prefix=prefix)
+
+        hashpipe = Hashpipe(algorithm=algorithm)
         assert hashpipe.hash_matches(
-            pattern=re.compile(b".*"), data=b"", key=b"", prefix=prefix,
-        ) == _format_hash(b"74e6f7298a9c2d168935f58c001bad88", prefix=prefix)
+            pattern=re.compile(b".*"), data=data, key=key, prefix=prefix,
+        ) == expected
+
+        outbuf = BytesIO()
+        with patch("sys.argv", [__file__,
+                                "-k", hexlify(key).decode(),
+                                "-a", algorithm,
+                                "-p", prefix.decode(),
+                                ".*"]):
+            main(in_=(b"",), out=outbuf)
+        assert outbuf.getvalue() == expected

@@ -23,7 +23,7 @@ import hmac
 import re
 import sys
 from typing import List  # noqa: F401 pylint: disable=unused-import
-from typing import Match, Pattern
+from typing import BinaryIO, Iterable, Match, Pattern
 
 
 __version__ = "0.9.0"
@@ -78,7 +78,8 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
         return pattern.sub(_replace, data)
 
 
-def main() -> None:
+def main(in_: Iterable[bytes] = sys.stdin.buffer,
+         out: BinaryIO = sys.stdout.buffer) -> None:
     """Run main entry point."""
     parser = argparse.ArgumentParser(
         description="Read stdin line by line, hash regex matches, and " +
@@ -115,8 +116,8 @@ def main() -> None:
 
     hashpipe = Hashpipe(args.algorithm)
 
-    for line in sys.stdin.buffer:
-        sys.stdout.buffer.write(
+    for line in in_:
+        out.write(
             hashpipe.hash_matches(pattern=args.regex, data=line,
                                   key=args.key, prefix=args.prefix))
 
