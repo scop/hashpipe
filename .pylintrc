@@ -1,0 +1,3 @@
+[MESSAGES CONTROL]
+# Formatting handled by black
+disable = format
