@@ -277,6 +277,7 @@ def test_prefixing() -> None:
 
 
 def test_invalid_cli_regex() -> None:
+    """Test invalid regex from CLI."""
     with pytest.raises(SystemExit, match="^[^0]*$"):
         with patch("sys.argv", [__file__, "***"]):
             main()
