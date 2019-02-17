@@ -12,6 +12,11 @@ Matches are hashed with their HMAC hex digests using a configurable
 key and digest algorithm, surrounded by angle brackets, and optionally
 prefixed with a configurable string within the brackets.
 
+What gets hashed for each match depends on whether the regular
+expression contains capturing groups. If it doesn't, the entire match
+content is hashed. If it does, only content of the first capturing
+group is.
+
 The command line tool operates as a pipe, reading standard input and
 outputting to standard output.
 
