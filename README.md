@@ -30,12 +30,12 @@ import re
 
 from hashpipe import Hashpipe
 
-hashpipe = Hashpipe(algorithm="sha256")
-hashed = hashpipe.hash_matches(
-    key=os.urandom(128),
-    data=b"The quick brown fox jumps over the lazy dog.",
+hashpipe = Hashpipe(
     pattern=re.compile(br"\bfox|dog\b"),
+    algorithm="sha256",
+    key=os.urandom(128),
 )
+hashed = hashpipe.hash_matches(b"The quick brown fox jumps over the lazy dog.")
 # hashed now contains something like:
 # b'The quick brown <00adbe4c178e322e582e4e45c4989a204655c4b3960c0be298bc763e29dc738b> '
 # b'jumps over the lazy <ee68954fe2f64931fb63756a5ecd1e22b90984c6b29fe3340b159dcff1f98244>.'

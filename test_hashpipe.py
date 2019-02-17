@@ -141,13 +141,10 @@ def test_ref_nongrouping() -> None:
 
             expected = _format_hash(hash_)
 
-            hashpipe = Hashpipe(algorithm=algorithm)
-            assert (
-                hashpipe.hash_matches(
-                    pattern=case.pattern, data=case.data, key=case.key
-                )
-                == expected
+            hashpipe = Hashpipe(
+                pattern=case.pattern, algorithm=algorithm, key=case.key
             )
+            assert hashpipe.hash_matches(case.data) == expected
 
             outbuf = BytesIO()
             with patch(
@@ -215,13 +212,10 @@ def test_grouping() -> None:
 
     for case in cases:
 
-        hashpipe = Hashpipe(algorithm=case.algorithm)
-        assert (
-            hashpipe.hash_matches(
-                pattern=case.pattern, data=case.data, key=case.key
-            )
-            == case.result
+        hashpipe = Hashpipe(
+            pattern=case.pattern, algorithm=case.algorithm, key=case.key
         )
+        assert hashpipe.hash_matches(case.data) == case.result
 
         outbuf = BytesIO()
         with patch(
@@ -250,13 +244,13 @@ def test_prefixing() -> None:
             b"74e6f7298a9c2d168935f58c001bad88", prefix=prefix
         )
 
-        hashpipe = Hashpipe(algorithm=algorithm)
-        assert (
-            hashpipe.hash_matches(
-                pattern=re.compile(b".*"), data=data, key=key, prefix=prefix
-            )
-            == expected
+        hashpipe = Hashpipe(
+            pattern=re.compile(b".*"),
+            algorithm=algorithm,
+            key=key,
+            prefix=prefix,
         )
+        assert hashpipe.hash_matches(data) == expected
 
         outbuf = BytesIO()
         with patch(

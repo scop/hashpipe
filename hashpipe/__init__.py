@@ -33,8 +33,14 @@ DEFAULT_ALGORITHM = "sha1"
 class Hashpipe:  # pylint: disable=too-few-public-methods
     """Hash pipe."""
 
-    def __init__(self, algorithm: str = DEFAULT_ALGORITHM) -> None:
-        """Create new Hashpipe using given digest algorithm."""
+    def __init__(
+        self,
+        pattern: Pattern[bytes],
+        algorithm: str = DEFAULT_ALGORITHM,
+        key: bytes = b"",
+        prefix: bytes = b"",
+    ) -> None:
+        """Create new Hashpipe."""
         if hasattr(hmac, "digest"):
             # Optimize for CPython 3.7+: use hmac.digest with str digestmod
             self._digestmod = algorithm
@@ -45,28 +51,24 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
                 hashlib, algorithm, functools.partial(hashlib.new, algorithm)
             )
             self.hexdigest = self._hexdigest_hmac_new
+        self.pattern = pattern
+        self.key = key
+        self.prefix = prefix
 
-    def _hexdigest_hmac_new(self, key: bytes, msg: bytes) -> str:
-        return hmac.new(key, msg, self._digestmod).hexdigest()
+    def _hexdigest_hmac_new(self, data: bytes) -> str:
+        return hmac.new(self.key, data, self._digestmod).hexdigest()
 
-    def _hexdigest_hmac_digest(self, key: bytes, msg: bytes) -> str:
+    def _hexdigest_hmac_digest(self, data: bytes) -> str:
         return hmac.digest(  # type: ignore # pylint: disable=no-member # 3.7+
-            key, msg, self._digestmod
+            self.key, data, self._digestmod
         ).hex()
 
-    def hash_matches(
-        self,
-        pattern: Pattern[bytes],
-        data: bytes,
-        key: bytes = b"",
-        prefix: bytes = b"",
-    ) -> bytes:
+    def hash_matches(self, data: bytes) -> bytes:
         """
         Hash matches.
 
         Replace the first groups of regular expression matches in given text
-        with their HMAC hex digests surrounded by angle brackets, using the
-        given algorithm, optionally prefixing them with the given prefix.
+        with their HMAC hex digests surrounded by angle brackets.
         """
 
         def _replace(match: Match[bytes]) -> bytes:
@@ -80,10 +82,10 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
                 # hash entire match
                 data = match.group(0)
                 pre = post = b""
-            digest = self.hexdigest(key, data).encode()
-            return pre + b"<" + prefix + digest + b">" + post
+            digest = self.hexdigest(data).encode()
+            return pre + b"<" + self.prefix + digest + b">" + post
 
-        return pattern.sub(_replace, data)
+        return self.pattern.sub(_replace, data)
 
 
 def main(
@@ -150,14 +152,15 @@ def main(
 
     args = parser.parse_args()
 
-    hashpipe = Hashpipe(args.algorithm)
+    hashpipe = Hashpipe(
+        pattern=args.regex,
+        algorithm=args.algorithm,
+        key=args.key,
+        prefix=args.prefix,
+    )
 
     for line in in_:
-        out.write(
-            hashpipe.hash_matches(
-                pattern=args.regex, data=line, key=args.key, prefix=args.prefix
-            )
-        )
+        out.write(hashpipe.hash_matches(line))
 
 
 if __name__ == "__main__":
