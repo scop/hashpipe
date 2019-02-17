@@ -27,7 +27,7 @@ from typing import List  # noqa: F401 pylint: disable=unused-import
 from typing import BinaryIO, Iterable, Match, Pattern, Set
 
 
-__version__ = "0.9.0"
+__version__ = "0.9.1"
 DEFAULT_ALGORITHM = "sha1"
 
 
