@@ -44,13 +44,13 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
         if hasattr(hmac, "digest"):
             # Optimize for CPython 3.7+: use hmac.digest with str digestmod
             self._digestmod = algorithm
-            self.hexdigest = self._hexdigest_hmac_digest
+            self._hexdigest = self._hexdigest_hmac_digest
         else:
             # Try getattr for faster direct constructor access than .new
             self._digestmod = getattr(
                 hashlib, algorithm, functools.partial(hashlib.new, algorithm)
             )
-            self.hexdigest = self._hexdigest_hmac_new
+            self._hexdigest = self._hexdigest_hmac_new
         self.pattern = pattern
         self.key = key
         self.prefix = prefix
@@ -82,7 +82,7 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
                 # hash entire match
                 data = match.group(0)
                 pre = post = b""
-            digest = self.hexdigest(data).encode()
+            digest = self._hexdigest(data).encode()
             return pre + b"<" + self.prefix + digest + b">" + post
 
         return self.pattern.sub(_replace, data)
