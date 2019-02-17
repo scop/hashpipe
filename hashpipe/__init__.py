@@ -24,7 +24,7 @@ import re
 import sys
 from binascii import hexlify
 from typing import List  # noqa: F401 pylint: disable=unused-import
-from typing import BinaryIO, Iterable, Match, Pattern
+from typing import BinaryIO, Iterable, Match, Pattern, Set
 
 
 __version__ = "0.9.0"
@@ -89,6 +89,30 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
         return self.pattern.sub(_replace, data)
 
 
+def _available_algorithms() -> Set[str]:
+    """
+    Get available algorithms for use in suggestions.
+
+    Algorithm names are case sensitive, but for many there is an all-lowercase
+    spelling as well as some variants available. Keep only the all-lowercase
+    one of those.
+    """
+    avail = set()
+    pass2 = set()
+    for algo in hashlib.algorithms_available:
+        lalgo = algo.lower()
+        if "with" in lalgo:
+            continue  # skip apparently redundant ones
+        if lalgo != algo:
+            pass2.add(algo)
+        else:
+            avail.add(lalgo)
+    for algo in pass2:
+        if algo.lower() not in avail:
+            avail.add(algo)
+    return avail
+
+
 def main(
     in_: Iterable[bytes] = sys.stdin.buffer, out: BinaryIO = sys.stdout.buffer
 ) -> None:
@@ -121,20 +145,13 @@ def main(
         help="Prefix to add in replacements",
     )
 
-    # weed out uppercase variants where lowercase exists from available
-    avail = []  # type: List[str]
-    for algo in hashlib.algorithms_available:
-        if "with" in algo.lower():
-            continue  # skip apparently redundant ones
-        if algo.upper() != algo and algo.lower() not in avail:
-            avail.append(algo)
     parser.add_argument(
         "-a",
         "--algorithm",
         type=str,
         default=DEFAULT_ALGORITHM,
         help="Digest algorithm to use, one of: %s"
-        % ", ".join(sorted(avail, key=lambda x: x.lower())),
+        % ", ".join(sorted(_available_algorithms(), key=lambda x: x.lower())),
     )
 
     def pattern(arg: str) -> Pattern[bytes]:

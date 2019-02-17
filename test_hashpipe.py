@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 import pytest  # type: ignore
 
-from hashpipe import Hashpipe
+from hashpipe import Hashpipe, _available_algorithms
 from hashpipe.__main__ import main
 
 
@@ -275,3 +275,14 @@ def test_invalid_cli_regex() -> None:
     with pytest.raises(SystemExit, match="^[^0]*$"):
         with patch("sys.argv", [__file__, "***"]):
             main()
+
+
+def test_available_algorithms() -> None:
+    """Test finding available algorithms."""
+    avail = _available_algorithms()
+    # Some found?
+    assert avail
+    # Ones containing "with" have been excluded?
+    assert not any("with" in x for x in avail)
+    # Non-lowercase variants have been excluded?
+    assert not any(x.lower() in avail for x in avail if x != x.lower())
