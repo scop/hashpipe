@@ -22,6 +22,7 @@ import hashlib
 import hmac
 import re
 import sys
+from binascii import hexlify
 from typing import List  # noqa: F401 pylint: disable=unused-import
 from typing import BinaryIO, Iterable, Match, Pattern
 
@@ -44,24 +45,24 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
         if hasattr(hmac, "digest"):
             # Optimize for CPython 3.7+: use hmac.digest with str digestmod
             self._digestmod = algorithm
-            self._hexdigest = self._hexdigest_hmac_digest
+            self._digest = self._digest_hmac_digest
         else:
             # Try getattr for faster direct constructor access than .new
             self._digestmod = getattr(
                 hashlib, algorithm, functools.partial(hashlib.new, algorithm)
             )
-            self._hexdigest = self._hexdigest_hmac_new
+            self._digest = self._digest_hmac_new
         self.pattern = pattern
         self.key = key
         self.prefix = prefix
 
-    def _hexdigest_hmac_new(self, data: bytes) -> str:
-        return hmac.new(self.key, data, self._digestmod).hexdigest()
+    def _digest_hmac_new(self, data: bytes) -> bytes:
+        return hmac.new(self.key, data, self._digestmod).digest()
 
-    def _hexdigest_hmac_digest(self, data: bytes) -> str:
+    def _digest_hmac_digest(self, data: bytes) -> bytes:
         return hmac.digest(  # type: ignore # pylint: disable=no-member # 3.7+
             self.key, data, self._digestmod
-        ).hex()
+        )
 
     def hash_matches(self, data: bytes) -> bytes:
         """
@@ -82,8 +83,8 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
                 # hash entire match
                 data = match.group(0)
                 pre = post = b""
-            digest = self._hexdigest(data).encode()
-            return pre + b"<" + self.prefix + digest + b">" + post
+            digest = self._digest(data)
+            return pre + b"<" + self.prefix + hexlify(digest) + b">" + post
 
         return self.pattern.sub(_replace, data)
 
