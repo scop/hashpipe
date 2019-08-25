@@ -1,0 +1,7 @@
+black>=19.3b0
+flake8>=3.6
+flake8-bugbear
+flake8-docstrings
+mypy
+pylint
+pytest>=3
