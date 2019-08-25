@@ -123,10 +123,7 @@ def main(
     )
 
     parser.add_argument(
-        "-V",
-        "--version",
-        action="version",
-        version="hashpipe %s" % __version__,
+        "-V", "--version", action="version", version="hashpipe %s" % __version__
     )
 
     parser.add_argument(
@@ -162,19 +159,13 @@ def main(
             raise argparse.ArgumentError
 
     parser.add_argument(
-        "regex",
-        type=pattern,
-        metavar="REGEX",
-        help="Regular expression to match",
+        "regex", type=pattern, metavar="REGEX", help="Regular expression to match"
     )
 
     args = parser.parse_args()
 
     hashpipe = Hashpipe(
-        pattern=args.regex,
-        algorithm=args.algorithm,
-        key=args.key,
-        prefix=args.prefix,
+        pattern=args.regex, algorithm=args.algorithm, key=args.key, prefix=args.prefix
     )
 
     for line in in_:

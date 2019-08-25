@@ -91,9 +91,7 @@ def test_ref_nongrouping() -> None:
             hashes=dict(sha1=b"125d7342b9ac11cd91a39af48aa17b4f63f175d3"),
         ),
         TestCase(
-            key=bytes.fromhex(
-                "0102030405060708090a0b0c0d0e0f10111213141516171819"
-            ),
+            key=bytes.fromhex("0102030405060708090a0b0c0d0e0f10111213141516171819"),
             data=bytes.fromhex("cd" * 50),
             pattern=re.compile(b".+"),
             hashes=dict(
@@ -141,9 +139,7 @@ def test_ref_nongrouping() -> None:
 
             expected = _format_hash(hash_)
 
-            hashpipe = Hashpipe(
-                pattern=case.pattern, algorithm=algorithm, key=case.key
-            )
+            hashpipe = Hashpipe(pattern=case.pattern, algorithm=algorithm, key=case.key)
             assert hashpipe.hash_matches(case.data) == expected
 
             outbuf = BytesIO()
@@ -182,8 +178,7 @@ def test_grouping() -> None:
             pattern=re.compile(br"Well, (Hi There)"),
             algorithm="md5",
             result=(
-                "Well, %s!"
-                % _format_hash(b"9294727a3638bb1c13f48ef8158bfc9d").decode()
+                "Well, %s!" % _format_hash(b"9294727a3638bb1c13f48ef8158bfc9d").decode()
             ).encode(),
         ),
         TestCase(
@@ -192,8 +187,7 @@ def test_grouping() -> None:
             pattern=re.compile(br"(?P<name_ignored>Hi There)"),
             algorithm="md5",
             result=(
-                "Well, %s!"
-                % _format_hash(b"9294727a3638bb1c13f48ef8158bfc9d").decode()
+                "Well, %s!" % _format_hash(b"9294727a3638bb1c13f48ef8158bfc9d").decode()
             ).encode(),
         ),
         TestCase(
@@ -203,9 +197,7 @@ def test_grouping() -> None:
             algorithm="sha1",
             result=(
                 "Well, %s!"
-                % _format_hash(
-                    b"b617318655057264e28bc0b6fb378c8ef146be00"
-                ).decode()
+                % _format_hash(b"b617318655057264e28bc0b6fb378c8ef146be00").decode()
             ).encode(),
         ),
     )
@@ -240,15 +232,10 @@ def test_prefixing() -> None:
         algorithm = "md5"
         data = b""
         key = b""
-        expected = _format_hash(
-            b"74e6f7298a9c2d168935f58c001bad88", prefix=prefix
-        )
+        expected = _format_hash(b"74e6f7298a9c2d168935f58c001bad88", prefix=prefix)
 
         hashpipe = Hashpipe(
-            pattern=re.compile(b".*"),
-            algorithm=algorithm,
-            key=key,
-            prefix=prefix,
+            pattern=re.compile(b".*"), algorithm=algorithm, key=key, prefix=prefix
         )
         assert hashpipe.hash_matches(data) == expected
 
