@@ -152,6 +152,13 @@ def main(
         % ", ".join(sorted(_available_algorithms(), key=lambda x: x.lower())),
     )
 
+    parser.add_argument(
+        "-A",
+        "--available-algorithms",
+        action="store_true",
+        help="List available algorithms and exit",
+    )
+
     def pattern(arg: str) -> Pattern[bytes]:
         """Convert argument to compiled pattern."""
         try:
@@ -159,11 +166,19 @@ def main(
         except BaseException:
             raise argparse.ArgumentError
 
-    parser.add_argument(
-        "regex", type=pattern, metavar="REGEX", help="Regular expression to match"
-    )
+    if any(x in sys.argv for x in ("-h", "--help")) or not any(
+        x in sys.argv for x in ("-A", "--available-algorithms")
+    ):
+        parser.add_argument(
+            "regex", type=pattern, metavar="REGEX", help="Regular expression to match"
+        )
 
     args = parser.parse_args()
+
+    if args.available_algorithms:
+        for algo in sorted(_available_algorithms()):
+            print(algo)
+        return
 
     hashpipe = Hashpipe(
         pattern=args.regex, algorithm=args.algorithm, key=args.key, prefix=args.prefix
