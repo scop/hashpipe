@@ -7,7 +7,8 @@ matrix:
     - python: "3.3"
       dist: trusty
       env: TOXENV=py33
-      install: pip install -U tox "setuptools<40" "virtualenv<15.2"
+      install: |
+        pip install -U "tox<3" "pluggy<0.10" "setuptools<40" "virtualenv<15.2"
     - python: "3.4"
       env: TOXENV=py34
     - python: "3.5"
