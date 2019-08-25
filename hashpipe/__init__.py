@@ -25,7 +25,6 @@ import hmac
 import re
 import sys
 from binascii import hexlify
-from typing import List  # noqa: F401 pylint: disable=unused-import
 from typing import BinaryIO, Iterable, Match, Pattern, Set
 
 
