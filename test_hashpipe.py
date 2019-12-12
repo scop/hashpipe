@@ -7,7 +7,6 @@ from typing import Dict, NamedTuple, Pattern
 from unittest.mock import patch
 
 import pytest  # type: ignore
-
 from hashpipe import Hashpipe, _available_algorithms
 from hashpipe.__main__ import main
 
