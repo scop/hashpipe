@@ -28,5 +28,6 @@ repos:
     rev: pylint-2.4.4
     hooks:
       - id: pylint
-        additional_dependencies: [pytest>=3]
+        additional_dependencies:
+          - pytest>=3
         exclude: ^bin/hashpipe$
