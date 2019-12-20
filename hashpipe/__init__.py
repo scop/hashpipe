@@ -27,6 +27,9 @@ import sys
 from binascii import hexlify
 from typing import BinaryIO, Iterable, Match, Pattern, Set
 
+# for hmac.digest only available in 3.7+
+# mypy: no-warn-unused-ignores
+
 __version__ = "0.9.1"
 DEFAULT_ALGORITHM = "sha1"
 
