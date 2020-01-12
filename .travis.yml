@@ -24,7 +24,8 @@ matrix:
       env: TOXENV=py38
     - python: "nightly"
       env: TOXENV=py39
-    - python: "pypy3.6-7.1.1"
+    - python: "pypy3.6-7.2.0"
+      dist: bionic
       env: TOXENV=pypy3
     - python: "3.8"
       env: TOXENV=lint SKIP_CODECOV=true
