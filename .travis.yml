@@ -2,7 +2,7 @@ language: python
 cache:
   pip: true
   directories: [$HOME/.cache/pre-commit]
-dist: xenial
+dist: bionic
 matrix:
   fast_finish: true
   include:
@@ -13,6 +13,7 @@ matrix:
         pip install -U "tox<3" "pluggy<0.10" "setuptools<40" "virtualenv<15.2"
       script: tox  # no support for --skip-missing-interpreters false
     - python: "3.4"
+      dist: xenial
       env: TOXENV=py34
     - python: "3.5"
       env: TOXENV=py35
@@ -25,7 +26,6 @@ matrix:
     - python: "nightly"
       env: TOXENV=py39
     - python: "pypy3.6-7.2.0"
-      dist: bionic
       env: TOXENV=pypy3
     - python: "3.8"
       env: TOXENV=lint SKIP_CODECOV=true
