@@ -145,7 +145,7 @@ def main(
         help="Prefix to add in replacements",
     )
 
-    parser.add_argument(
+    algorithm_arg = parser.add_argument(
         "-a",
         "--algorithm",
         type=str,
@@ -153,6 +153,8 @@ def main(
         help="Digest algorithm to use, one of: %s"
         % ", ".join(sorted(_available_algorithms(), key=lambda x: x.lower())),
     )
+    # type ignore: argcomplete adds the "completer" attribute
+    algorithm_arg.completer = lambda **_: _available_algorithms()  # type: ignore
 
     parser.add_argument(
         "-A",
@@ -174,6 +176,13 @@ def main(
         parser.add_argument(
             "regex", type=pattern, metavar="REGEX", help="Regular expression to match"
         )
+
+    try:
+        import argcomplete  # type: ignore # pylint: disable=import-outside-toplevel
+    except ImportError:
+        pass
+    else:
+        argcomplete.autocomplete(parser)
 
     args = parser.parse_args()
 

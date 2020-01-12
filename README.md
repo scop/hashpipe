@@ -18,7 +18,8 @@ content is hashed. If it does, only content of the first capturing
 group is.
 
 The command line tool operates as a pipe, reading standard input and
-outputting to standard output.
+outputting to standard output. It has optional shell completion support
+using [argcomplete](https://pypi.org/project/argcomplete/).
 
 ## Examples
 
