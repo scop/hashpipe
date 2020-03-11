@@ -3,7 +3,6 @@
 .coverage
 .eggs/
 .mypy_cache/
-.pytest_cache/
 .python-version
 .tox/
 __pycache__/
