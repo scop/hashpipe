@@ -1,3 +1,7 @@
+[MASTER]
+load-plugins=pylint_strict_informational
+
 [MESSAGES CONTROL]
 # Formatting handled by black, imports by isort
 disable = format,wrong-import-order
+enable = use-symbolic-message-instead  #,useless-suppression

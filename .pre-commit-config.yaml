@@ -28,5 +28,6 @@ repos:
     hooks:
       - id: pylint
         additional_dependencies:
+          - pylint-strict-informational==0.1
           - pytest>=3
         exclude: ^bin/hashpipe$
