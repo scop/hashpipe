@@ -24,7 +24,7 @@ repos:
       - id: mypy
         args: []
   - repo: https://github.com/PyCQA/pylint
-    rev: pylint-2.5.0
+    rev: pylint-2.5.2
     hooks:
       - id: pylint
         additional_dependencies:
