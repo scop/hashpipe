@@ -2,7 +2,6 @@
 .cache/
 .coverage
 .eggs/
-.mypy_cache/
 .python-version
 .tox/
 __pycache__/
