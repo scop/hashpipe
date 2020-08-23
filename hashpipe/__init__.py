@@ -167,8 +167,8 @@ def main(
         """Convert argument to compiled pattern."""
         try:
             return re.compile(str.encode(arg))
-        except BaseException:
-            raise argparse.ArgumentError
+        except BaseException as ex:
+            raise argparse.ArgumentError from ex
 
     if any(x in sys.argv for x in ("-h", "--help")) or not any(
         x in sys.argv for x in ("-A", "--available-algorithms")
