@@ -19,7 +19,7 @@ repos:
           - flake8-docstrings==1.5.0
 
   - repo: https://github.com/timothycrosley/isort
-    rev: 5.1.0
+    rev: 5.4.2
     hooks:
       - id: isort
 
