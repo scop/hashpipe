@@ -35,7 +35,7 @@ repos:
       - id: pylint
         additional_dependencies:
           - pylint-strict-informational==0.1
-          - pytest>=3
+          - pytest>=3  # so imports in tested code resolve
         exclude: ^bin/hashpipe$
 
   - repo: https://github.com/asottile/pyupgrade
