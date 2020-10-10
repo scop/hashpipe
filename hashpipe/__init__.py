@@ -63,7 +63,7 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
         return hmac.new(self.key, data, self._digestmod).digest()
 
     def _digest_hmac_digest(self, data: bytes) -> bytes:
-        return hmac.digest(  # type: ignore # pylint: disable=no-member # 3.7+
+        return hmac.digest(  # type: ignore[attr-defined,no-any-return] # pylint: disable=no-member # 3.7+
             self.key, data, self._digestmod
         )
 
@@ -154,7 +154,7 @@ def main(
         % ", ".join(sorted(_available_algorithms(), key=lambda x: x.lower())),
     )
     # type ignore: argcomplete adds the "completer" attribute
-    algorithm_arg.completer = lambda **_: _available_algorithms()  # type: ignore
+    algorithm_arg.completer = lambda **_: _available_algorithms()  # type: ignore[attr-defined]
 
     parser.add_argument(
         "-A",
@@ -178,7 +178,7 @@ def main(
         )
 
     try:
-        import argcomplete  # type: ignore # pylint: disable=import-outside-toplevel
+        import argcomplete  # type: ignore[import] # pylint: disable=import-outside-toplevel
     except ImportError:
         pass
     else:

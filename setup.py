@@ -2,7 +2,7 @@
 
 """Hashpipe setup."""
 
-import setuptools  # type: ignore
+import setuptools  # type: ignore[import]
 
 
 def get_version() -> str:

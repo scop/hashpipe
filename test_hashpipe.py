@@ -6,7 +6,7 @@ from io import BytesIO
 from typing import Dict, NamedTuple, Pattern
 from unittest.mock import patch
 
-import pytest  # type: ignore
+import pytest  # type: ignore[import]
 
 from hashpipe import Hashpipe, _available_algorithms, main
 
