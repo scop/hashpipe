@@ -24,12 +24,10 @@ jobs:
     - python: "3.4"
       dist: xenial
       env: TOXENV=py34
-    - python: "3.8"
-      env: TOXENV=lint SKIP_CODECOV=true
 install: pip install -U tox-travis
 script: tox --skip-missing-interpreters false
 after_success:
-  - test "$SKIP_CODECOV" = true || { pip install codecov && codecov -X gcov; }
+  - pip install codecov && codecov -X gcov
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
