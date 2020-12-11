@@ -6,18 +6,6 @@ dist: focal
 python:
   - "3.8"
   - "nightly"
-jobs:
-  fast_finish: true
-  include:
-    - python: "3.3"
-      dist: trusty
-      env: TOXENV=py33
-      install: |
-        pip install -U "tox<3" "pluggy<0.10" "setuptools<40" "virtualenv<15.2"
-      script: tox  # no support for --skip-missing-interpreters false
-    - python: "3.4"
-      dist: xenial
-      env: TOXENV=py34
 install: pip install -U tox-travis
 script: tox --skip-missing-interpreters false
 after_success:

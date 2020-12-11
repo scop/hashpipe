@@ -11,6 +11,34 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
       - uses: pre-commit/action@v2.0.0
+  test-old:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version:
+          - "3.3"
+          - "3.4"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{matrix.python-version}}
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{runner.os}}-pip-${{matrix.python-version}}
+      - run: |
+          set -x
+          if [ ${{matrix.python-version}} = 3.3 ]; then
+              pip install -U \
+                 "tox<3" "pluggy<0.10" "setuptools<40" "virtualenv<15.2" codecov
+              tox -e py33  # no support for --skip-missing-interpreters false
+          else
+              pip install -U tox codecov
+              tox --skip-missing-interpreters false -e \
+                 py$(echo ${{matrix.python-version}} | tr -d .)
+          fi
+          codecov -X gcov
   test:
     runs-on: ubuntu-latest
     strategy:
