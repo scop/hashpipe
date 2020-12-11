@@ -2,7 +2,7 @@
 
 [![Python versions](https://img.shields.io/pypi/pyversions/hashpipe.svg)](https://pypi.org/project/hashpipe/)
 [![PyPI version](https://badge.fury.io/py/hashpipe.svg)](https://badge.fury.io/py/hashpipe)
-[![Build status](https://travis-ci.org/scop/hashpipe.svg?branch=master)](https://travis-ci.org/scop/hashpipe)
+[![CI status](https://github.com/scop/hashpipe/workflows/CI/badge.svg)](https://github.com/scop/hashpipe/actions?query=workflow%3ACI)
 [![Test coverage](https://codecov.io/gh/scop/hashpipe/branch/master/graph/badge.svg)](https://codecov.io/gh/scop/hashpipe)
 
 hashpipe is a command line tool and a Python library for hashing
