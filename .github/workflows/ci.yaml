@@ -1,11 +1,17 @@
-name: test
+name: CI
 
 on:
-  - push
   - pull_request
+  - push
 
 jobs:
-  build:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: pre-commit/action@v2.0.0
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,13 +26,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: fedora-python/tox-github-action@v0.4
         with:
-          tox_env: ${{ matrix.tox_env }}
+          tox_env: ${{matrix.tox_env}}
       - uses: actions/setup-python@v2
       - uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip
+          key: ${{runner.os}}-pip
       - run: |
           python -m pip install codecov
           codecov -X gcov
-
