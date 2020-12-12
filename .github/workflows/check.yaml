@@ -31,10 +31,12 @@ jobs:
           python-version: ${{matrix.python-version}}
       - uses: actions/cache@v2
         with:
-          path: ~/.cache/pip
+          path: |
+            ~/.cache/pip
+            .tox
           key: >-
             ${{runner.os}} pip ${{matrix.python-version}}
-            ${{hashFiles('requirements-test.txt')}}
+            ${{hashFiles('requirements-test.txt', 'tox.ini')}}
       - run: |
           set -euxo pipefail
           if [ ${{matrix.python-version}} = 3.3 ]; then
