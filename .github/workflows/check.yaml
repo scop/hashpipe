@@ -11,13 +11,19 @@ jobs:
       - uses: actions/setup-python@v2
       - uses: pre-commit/action@v2.0.0
 
-  test-old:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version:
           - "3.3"
           - "3.4"
+          - "3.5"
+          - "3.6"
+          - "3.7"
+          - "3.8"
+          - "3.9"
+          - "pypy3"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -26,7 +32,9 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{runner.os}}-pip-${{matrix.python-version}}
+          key: >-
+            ${{runner.os}} pip ${{matrix.python-version}}
+            ${{hashFiles('requirements-test.txt')}}
       - run: |
           set -euxo pipefail
           if [ ${{matrix.python-version}} = 3.3 ]; then
@@ -35,33 +43,8 @@ jobs:
               tox -e py33  # no support for --skip-missing-interpreters false
           else
               pip install -U tox codecov
-              tox --skip-missing-interpreters false -e \
-                 py$(echo ${{matrix.python-version}} | tr -d .)
+              tox --skip-missing-interpreters false -e py$(
+                  echo ${{matrix.python-version}} | sed -e 's/\.//' -e s/^py//
+              )
           fi
-          codecov -X gcov
-
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        tox_env:
-          - py35
-          - py36
-          - py37
-          - py38
-          - py39
-          - pypy3
-    steps:
-      - uses: actions/checkout@v2
-      - uses: fedora-python/tox-github-action@v0.4
-        with:
-          tox_env: ${{matrix.tox_env}}
-      - uses: actions/setup-python@v2
-      - uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{runner.os}}-pip
-      - run: |
-          set -euxo pipefail
-          python -m pip install codecov
           codecov -X gcov
