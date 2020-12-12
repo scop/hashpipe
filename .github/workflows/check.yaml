@@ -28,7 +28,7 @@ jobs:
           path: ~/.cache/pip
           key: ${{runner.os}}-pip-${{matrix.python-version}}
       - run: |
-          set -x
+          set -euxo pipefail
           if [ ${{matrix.python-version}} = 3.3 ]; then
               pip install -U \
                  "tox<3" "pluggy<0.10" "setuptools<40" "virtualenv<15.2" codecov
@@ -62,5 +62,6 @@ jobs:
           path: ~/.cache/pip
           key: ${{runner.os}}-pip
       - run: |
+          set -euxo pipefail
           python -m pip install codecov
           codecov -X gcov
