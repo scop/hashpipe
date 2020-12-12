@@ -25,6 +25,7 @@ jobs:
           - "3.7"
           - "3.8"
           - "3.9"
+          - "3.10.0-alpha - 3.10"
           - "pypy3"
     steps:
       - uses: actions/checkout@v2
@@ -48,7 +49,8 @@ jobs:
           else
               pip install -U tox codecov
               tox --skip-missing-interpreters false -e py$(
-                  echo ${{matrix.python-version}} | sed -e 's/\.//' -e s/^py//
+                  echo "${{matrix.python-version}}" | \
+                      sed -e "s/^.* //" -e "s/\.//" -e s/^py//
               )
           fi
           codecov -X gcov
