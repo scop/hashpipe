@@ -44,7 +44,7 @@ jobs:
           set -euxo pipefail
           if [ ${{matrix.python-version}} = 3.3 ]; then
               pip install -U \
-                 "tox<3" "pluggy<0.10" "setuptools<40" "virtualenv<15.2" codecov
+                 "tox<3" "pluggy<0.10" "setuptools<40" "virtualenv<15.2"
               tox -e py33  # no support for --skip-missing-interpreters false
           else
               pip install -U tox codecov
@@ -52,5 +52,5 @@ jobs:
                   echo "${{matrix.python-version}}" | \
                       sed -e "s/^.* //" -e "s/\.//" -e s/^py//
               )
+              codecov -X gcov
           fi
-          codecov -X gcov
