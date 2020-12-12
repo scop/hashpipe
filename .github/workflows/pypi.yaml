@@ -1,3 +1,5 @@
+name: pypi-upload
+
 on:
   push:
     tags:
