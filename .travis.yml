@@ -4,20 +4,8 @@ cache:
 os: linux
 dist: focal
 python:
-  - "3.8"
   - "nightly"
 install: pip install -U tox-travis
 script: tox --skip-missing-interpreters false
 after_success:
   - pip install codecov && codecov -X gcov
-deploy:
-  provider: pypi
-  distributions: sdist bdist_wheel
-  username: __token__
-  password:
-    secure: ARdgouX0zYQKH2uZiQp2ykfolXff7ZS+aK6nNECMTtDS8rA/iUARA0fQQwOhsxwWxogx2F7i4UfquKKzUy6LKcaKqiFFjtnRA83c4tFZzi/2r96YrikWelX3AeKIvXXNOL1lfMcxEsF3H4relLku/pC99BV5OYkZ7HEG+jbCd/CYsORiybrFcxZfRwbRJmUS2I8zB2YwvLXTiK2FT2n6n3CURJvDIQF22O4Kw/1rzrxfnENro0sRLtReJmEyvt8P410zWeHZPv22wUMxQkhj4X7D43w1qJUqXVg1b41F5ZUciaBviPeBpcy1wLiwS7xkhxSL1TGIe+yxbQHNygtd7U5wNdtGxe7ubnIDEyYnErJGz6Rs0VUUBp4MwRzeC+0aWtgFKQUh+3MUjnfFl0fjJ9V9XQI2aRyShwcCKMfqN+dCjavbt9li2XYE9Fn9zn1QPRLCKFX/cHiOasSbBnWaVkdaW4tecxwpE4jRgOz1Utz6DFotsYHZHyPbX8cxKsecdSmsvAqZxpKtK7/q88sAlT51O7pKLKgM6VtL+tGHOpPsuxszzriqlK7qkb87Fb5Jw35dYJfqkWL3EwP9iXf5RdcJVT1mAQEEWmerny8iY/8puoTxNOhv2psvQn/csfBFssFwWV+xyL7XUIBaAx0iijJBRmau21V68hbaeazxe8g=
-  on:
-    repo: scop/hashpipe
-    tags: true
-    python: "3.8"
-    condition: $TOXENV = py38
