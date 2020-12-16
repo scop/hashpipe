@@ -44,7 +44,7 @@ hashed = hashpipe.hash_matches(b"The quick brown fox jumps over the lazy dog.")
 
 ### Shell
 
-```raw
+```shellsession
 $ hashpipe --key=deadbeef --algorithm=md5 --prefix='{md5}' '^[^:]+' < /etc/passwd
 <{md5}31572cc0e16e31b00f9888a18310ceab>:x:0:0:root:/root:/bin/bash
 <{md5}1b4fa176c601aadfa5453b9074ba32d8>:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
