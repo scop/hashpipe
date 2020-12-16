@@ -32,13 +32,12 @@ repos:
         entry: venv-run mypy
         types: [python]
 
-  - repo: https://github.com/PyCQA/pylint
-    rev: pylint-2.6.0
-    hooks:
       - id: pylint
-        additional_dependencies:
-          - pylint-strict-informational==0.1
-          - pytest>=3  # so imports in tested code resolve
+        name: pylint
+        language: python
+        additional_dependencies: [venv-run>=0.1.0]
+        entry: venv-run pylint
+        types: [python]
         exclude: ^bin/hashpipe$
 
   - repo: https://github.com/asottile/pyupgrade
