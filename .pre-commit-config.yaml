@@ -23,11 +23,14 @@ repos:
     hooks:
       - id: isort
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.790
+  - repo: local
     hooks:
       - id: mypy
-        args: []
+        name: mypy
+        language: python
+        additional_dependencies: [venv-run>=0.1.0]
+        entry: venv-run mypy
+        types: [python]
 
   - repo: https://github.com/PyCQA/pylint
     rev: pylint-2.6.0
