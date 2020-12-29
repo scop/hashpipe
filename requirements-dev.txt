@@ -5,3 +5,4 @@ pre-commit>=1.18.2
 pylint>=2.6.0
 pylint-strict-informational>=0.1
 python-language-server
+pytype>=2020.12.23

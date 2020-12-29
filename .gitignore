@@ -3,9 +3,9 @@
 .coverage
 .eggs/
 .python-version
+.pytype/
 .tox/
 __pycache__/
 build/
 dist/
 pip-wheel-metadata/
-pytype_output/
