@@ -57,3 +57,8 @@ repos:
     rev: v0.26.0
     hooks:
       - id: markdownlint
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.0.0
+    hooks:
+      - id: codespell
