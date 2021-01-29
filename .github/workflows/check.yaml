@@ -15,7 +15,7 @@ jobs:
       # First, the Python matching pytype's python_version
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.5
+          python-version: 3.6
       # Then, the "main" Python we run things with. pre-commit/action uses this
       - uses: actions/setup-python@v2
         with:
@@ -31,7 +31,7 @@ jobs:
           python3.8 -m venv venv
           source venv/bin/activate
           pip install -Ur requirements-dev.txt
-          python3.5 -m pip install -Ur requirements-test.txt
+          python3.6 -m pip install -Ur requirements-test.txt
       - uses: pre-commit/action@v2.0.0
 
   test:
