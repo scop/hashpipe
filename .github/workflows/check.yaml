@@ -35,12 +35,12 @@ jobs:
       - uses: pre-commit/action@v2.0.0
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
     strategy:
       matrix:
+        os:
+          - ubuntu-latest
         python-version:
-          - "3.3"
-          - "3.4"
           - "3.5"
           - "3.6"
           - "3.7"
@@ -48,6 +48,11 @@ jobs:
           - "3.9"
           - "3.10.0-alpha - 3.10"
           - "pypy3"
+        include:
+          - python-version: "3.3"
+            os: ubuntu-18.04
+          - python-version: "3.4"
+            os: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
