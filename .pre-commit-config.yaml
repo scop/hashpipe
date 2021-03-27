@@ -15,6 +15,8 @@ repos:
     hooks:
       - id: flake8
         additional_dependencies:
+          - pycodestyle==2.7.0
+          - pyflakes==2.3.1
           - flake8-bugbear==21.3.2
           - flake8-docstrings==1.5.0
 
