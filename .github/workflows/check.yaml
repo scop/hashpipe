@@ -32,7 +32,7 @@ jobs:
           source venv/bin/activate
           pip install -Ur requirements-dev.txt
           python3.6 -m pip install -Ur requirements-test.txt
-      - uses: pre-commit/action@v2.0.0
+      - uses: pre-commit/action@v2.0.2
 
   test:
     runs-on: ${{matrix.os}}
