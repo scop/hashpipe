@@ -30,7 +30,7 @@ jobs:
       - run: |
           python3.8 -m venv venv
           source venv/bin/activate
-          pip install -Ur requirements-dev.txt
+          python3.8 -m pip install -Ur requirements-dev.txt
           python3.6 -m pip install -Ur requirements-test.txt
       - uses: pre-commit/action@v2.0.2
 
@@ -69,11 +69,11 @@ jobs:
       - run: |
           set -euxo pipefail
           if [ ${{matrix.python-version}} = 3.3 ]; then
-              pip install -U \
+              python3 -m pip install -U \
                  "tox<3" "pluggy<0.10" "setuptools<40" "virtualenv<15.2"
               tox -e py33  # no support for --skip-missing-interpreters false
           else
-              pip install -U tox codecov
+              python3 -m pip install -U tox codecov
               tox --skip-missing-interpreters false -e py$(
                   echo "${{matrix.python-version}}" | \
                       sed -e "s/^.* //" -e "s/\.//" -e s/^py//
