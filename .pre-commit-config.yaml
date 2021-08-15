@@ -5,11 +5,6 @@ repos:
     hooks:
       - id: black
 
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.0
-    hooks:
-      - id: bandit
-
   - repo: https://github.com/PyCQA/flake8
     rev: 3.9.2
     hooks:
@@ -17,6 +12,8 @@ repos:
         additional_dependencies:
           - pycodestyle==2.7.0
           - pyflakes==2.3.1
+          - flake8-bandit==2.1.2
+          - bandit==1.7.0
           - flake8-bugbear==21.4.3
           - flake8-docstrings==1.6.0
           - pydocstyle==6.1.1
