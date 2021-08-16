@@ -1,7 +1,7 @@
 repos:
 
   - repo: https://github.com/psf/black
-    rev: 21.5b2
+    rev: 21.7b0
     hooks:
       - id: black
 
@@ -19,7 +19,7 @@ repos:
           - pydocstyle==6.1.1
 
   - repo: https://github.com/PyCQA/isort
-    rev: 5.8.0
+    rev: 5.9.3
     hooks:
       - id: isort
 
@@ -48,17 +48,17 @@ repos:
         exclude: ^bin/hashpipe$
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.19.1
+    rev: v2.23.3
     hooks:
       - id: pyupgrade
         args: [--py3-plus, --keep-percent-format]
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.27.1
+    rev: v0.28.1
     hooks:
       - id: markdownlint
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1.0.11
+    rev: v1.1.6
     hooks:
       - id: typos
