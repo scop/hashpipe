@@ -28,7 +28,7 @@ repos:
             pydocstyle ==6.1.1
 
   - repo: https://github.com/PyCQA/isort
-    rev: 5.8.0
+    rev: 5.9.3
     hooks:
       - id: isort
 
