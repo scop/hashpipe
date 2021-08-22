@@ -1,5 +1,24 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    ":preserveSemverRanges"
+  ],
+  "semanticCommits": "enabled",
+  "commitMessageTopic": "{{depName}}",
+  "pip_requirements": {
+    "fileMatch": [
+      "(^|/)(requirements[\\w-]*\\.txt|\\.pre-commit-config\\.yaml)$"
+    ]
+  },
+  "packageRules": [
+    {
+      "matchFiles": ["requirements-test.txt"],
+      "semanticCommitType": "test"
+    },
+    {
+      "matchManagers": ["pre-commit"],
+      "commitMessageTopic": "{{depName}}",
+      "semanticCommitScope": "pre-commit"
+    }
   ]
 }
