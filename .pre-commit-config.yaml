@@ -68,6 +68,6 @@ repos:
       - id: markdownlint
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1.0.11
+    rev: v1.1.7
     hooks:
       - id: typos
