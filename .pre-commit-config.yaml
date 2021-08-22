@@ -57,7 +57,7 @@ repos:
         exclude: ^bin/hashpipe$
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.19.1
+    rev: v2.24.0
     hooks:
       - id: pyupgrade
         args: [--py3-plus, --keep-percent-format]
