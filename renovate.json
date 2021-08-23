@@ -19,6 +19,11 @@
       "matchManagers": ["pre-commit"],
       "commitMessageTopic": "{{depName}}",
       "semanticCommitScope": "pre-commit"
+    },
+    {
+      "matchPackageNames": ["black", "psf/black"],
+      "versioning": "pep440",
+      "ignoreUnstable": false
     }
   ]
 }
