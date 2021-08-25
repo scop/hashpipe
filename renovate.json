@@ -24,7 +24,7 @@
       "semanticCommitScope": "pre-commit"
     },
     {
-      "matchPackageNames": ["black", "psf/black"],
+      "matchPackagePatterns": ["(^|/)black$"],
       "groupName": "black",
       "versioning": "pep440",
       "ignoreUnstable": false
