@@ -28,6 +28,14 @@
       "groupName": "black",
       "versioning": "pep440",
       "ignoreUnstable": false
+    },
+    {
+      "matchPackagePatterns": ["(^|/)flake8$"],
+      "groupName": "flake8"
+    },
+    {
+      "matchPackagePatterns": ["(^|/)isort$"],
+      "groupName": "isort"
     }
   ]
 }
