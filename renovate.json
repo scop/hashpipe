@@ -31,10 +31,12 @@
     },
     {
       "matchPackagePatterns": ["(^|/)flake8$"],
+      "versioning": "pep440",
       "groupName": "flake8"
     },
     {
       "matchPackagePatterns": ["(^|/)isort$"],
+      "versioning": "pep440",
       "groupName": "isort"
     }
   ]
