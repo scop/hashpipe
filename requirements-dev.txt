@@ -24,4 +24,4 @@ python-language-server
 
 pytype ==2021.8.24
 
-pyupgrade ==2.24.0
+pyupgrade ==2.25.0
