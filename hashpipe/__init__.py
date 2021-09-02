@@ -27,10 +27,11 @@ import sys
 from binascii import hexlify
 from typing import BinaryIO, Iterable, Match, Pattern, Set
 
+from .version import __version__  # API
+
 # for hmac.digest only available in 3.7+
 # mypy: no-warn-unused-ignores
 
-__version__ = "0.9.2"
 DEFAULT_ALGORITHM = "sha1"
 
 
