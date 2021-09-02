@@ -72,6 +72,7 @@ repos:
     rev: v0.28.1
     hooks:
       - id: markdownlint
+        exclude: ^CHANGELOG\.md$
 
   - repo: https://github.com/crate-ci/typos
     rev: v1.1.7
