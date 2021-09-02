@@ -37,8 +37,8 @@ jobs:
           python-version: "3.9"
       - run: |
           set -euxo pipefail
-          python -m pip install -U setuptools wheel
-          python setup.py sdist bdist_wheel
+          python3 -m pip install -U setuptools wheel
+          python3 setup.py sdist bdist_wheel
           ls dist
       - uses: pypa/gh-action-pypi-publish@v1.4.2
         with:
