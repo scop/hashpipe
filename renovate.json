@@ -13,6 +13,9 @@
       "(^|/)(requirements[\\w-]*\\.txt|\\.pre-commit-config\\.yaml)$"
     ]
   },
+  "pre-commit": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "matchFiles": ["requirements-test.txt"],
