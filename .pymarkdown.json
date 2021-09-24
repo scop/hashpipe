@@ -1,0 +1,8 @@
+{
+    "plugins": {
+        "line-length": {
+            "//": "For long output in README.md (+ coincides with black)",
+            "code_block_line_length": 88
+        }
+    }
+}
