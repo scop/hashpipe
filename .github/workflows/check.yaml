@@ -80,3 +80,6 @@ jobs:
               )
               codecov -X gcov
           fi
+        env:
+          PYTEST_ADDOPTS: --color=yes
+          TOX_TESTENV_PASSENV: PYTEST_ADDOPTS
