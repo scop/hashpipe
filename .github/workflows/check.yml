@@ -74,7 +74,8 @@ jobs:
                  "tox<3" "pluggy<0.10" "setuptools<40" "virtualenv<15.2"
               tox -e py33  # no support for --skip-missing-interpreters false
           else
-              python3 -m pip install -U tox codecov
+              python3 -m pip install -U tox codecov \
+                  "$(grep -F pytest-dev/py.git@ requirements-test.txt)"
               # We could use tox-gh-actions for this, but that'd result in
               # a whole separate redundant section of versions to maintain;
               # with this approach the matrix alone is enough.
