@@ -1,8 +1,5 @@
 pytest >=3
 pytest-cov
-# https://github.com/pytest-dev/pytest/issues/9181
-# https://github.com/tox-dev/tox/issues/2249
-git+https://github.com/pytest-dev/py.git@2f03e5a#egg=py; python_version >"3.10"
 
 setuptools
 
