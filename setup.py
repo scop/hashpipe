@@ -7,7 +7,7 @@ import setuptools  # type: ignore[import]
 
 def get_version() -> str:
     """Extract version number."""
-    fname = "hashpipe/version.py"
+    fname = "hashpipe/__init__.py"
     with open(fname, encoding="utf-8") as file_:
         for line in file_:
             if line.startswith("__version__"):
