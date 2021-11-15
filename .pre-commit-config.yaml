@@ -41,15 +41,6 @@ repos:
         entry: venv-run mypy
         types: [python]
 
-      - id: pytype
-        name: pytype
-        language: python
-        additional_dependencies:
-          - #
-            venv-run ==0.1.0
-        entry: venv-run pytype
-        types: [python]
-
       - id: pylint
         name: pylint
         language: python
