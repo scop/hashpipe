@@ -10,21 +10,19 @@ repos:
     hooks:
       - id: flake8
         additional_dependencies:
-          # Splitting dashes and items on separate lines is intentional,
-          # enables Renovate's pip_requirements manager to update this file.
-          -
+          - #
             pycodestyle ==2.8.0
-          -
+          - #
             pyflakes ==2.4.0
-          -
+          - #
             flake8-bandit ==2.1.2
-          -
+          - #
             bandit ==1.7.0
-          -
+          - #
             flake8-bugbear ==21.4.3
-          -
+          - #
             flake8-docstrings ==1.6.0
-          -
+          - #
             pydocstyle ==6.1.1
 
   - repo: https://github.com/PyCQA/isort
@@ -38,7 +36,7 @@ repos:
         name: mypy
         language: python
         additional_dependencies:
-          -
+          - #
             venv-run ==0.1.0
         entry: venv-run mypy
         types: [python]
@@ -47,7 +45,7 @@ repos:
         name: pytype
         language: python
         additional_dependencies:
-          -
+          - #
             venv-run ==0.1.0
         entry: venv-run pytype
         types: [python]
@@ -56,7 +54,7 @@ repos:
         name: pylint
         language: python
         additional_dependencies:
-          -
+          - #
             venv-run ==0.1.0
         entry: venv-run pylint
         types: [python]
