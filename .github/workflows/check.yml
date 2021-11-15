@@ -25,8 +25,8 @@ jobs:
           path: |
             ~/.cache/pip
           key: >-
-            ${{runner.os}} pip
-            ${{hashFiles('requirements-dev.txt', 'requirements-test.txt')}}
+            ${{ runner.os }} pip
+            ${{ hashFiles('requirements-dev.txt', 'requirements-test.txt') }}
       - run: |
           python3.8 -m venv venv
           source venv/bin/activate
@@ -35,7 +35,7 @@ jobs:
       - uses: pre-commit/action@v2.0.3
 
   test:
-    runs-on: ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
@@ -58,18 +58,18 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: ${{matrix.python-version}}
+          python-version: ${{ matrix.python-version }}
       - uses: actions/cache@v2
         with:
           path: |
             ~/.cache/pip
             .tox
           key: >-
-            ${{runner.os}} pip ${{matrix.python-version}}
-            ${{hashFiles('requirements-test.txt', 'tox.ini')}}
+            ${{ runner.os }} pip ${{ matrix.python-version }}
+            ${{ hashFiles('requirements-test.txt', 'tox.ini') }}
       - run: |
           set -euxo pipefail
-          if [ "${{matrix.python-version}}" = 3.3 ]; then
+          if [ "${{ matrix.python-version }}" = 3.3 ]; then
               python3 -m pip install -U \
                   "tox<3" "pluggy<0.10" "setuptools<40" "virtualenv<15.2"
               tox -e py33  # no support for --skip-missing-interpreters false
@@ -80,7 +80,7 @@ jobs:
               # with this approach the matrix alone is enough.
               tox --skip-missing-interpreters false -e py$(
                   # "s/^.* //" for cases like "3.10.0-alpha - 3.10"
-                  echo "${{matrix.python-version}}" | \
+                  echo "${{ matrix.python-version }}" | \
                       sed -e "s/^.* //" -e "s/\.//" -e s/^py//
               )
               codecov -X gcov
