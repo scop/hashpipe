@@ -21,8 +21,8 @@ jobs:
         with:
           release-type: python
     outputs:
-      release_created: ${{steps.release_please.outputs.release_created}}
-      sha: ${{steps.release_please.outputs.sha}}
+      release_created: ${{ steps.release_please.outputs.release_created }}
+      sha: ${{ steps.release_please.outputs.sha }}
 
   pypi_upload:
     runs-on: ubuntu-latest
@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{needs.release_please.outputs.sha}}
+          ref: ${{ needs.release_please.outputs.sha }}
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9"
@@ -43,4 +43,4 @@ jobs:
           ls dist
       - uses: pypa/gh-action-pypi-publish@v1.4.2
         with:
-          password: ${{secrets.PYPI_API_TOKEN}}
+          password: ${{ secrets.PYPI_API_TOKEN }}
