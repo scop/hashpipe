@@ -47,7 +47,7 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
         """Create new Hashpipe."""
         if hasattr(hmac, "digest"):
             # Optimize for CPython 3.7+: use hmac.digest with str digestmod
-            self._digestmod = algorithm
+            self._digestname = algorithm
             self._digest = self._digest_hmac_digest
         else:
             # Try getattr for faster direct constructor access than .new
@@ -64,7 +64,7 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
 
     def _digest_hmac_digest(self, data: bytes) -> bytes:
         return hmac.digest(  # type: ignore[attr-defined,no-any-return] # pylint: disable=no-member # 3.7+
-            self.key, data, self._digestmod
+            self.key, data, self._digestname
         )
 
     def hash_matches(self, data: bytes) -> bytes:

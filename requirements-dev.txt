@@ -13,7 +13,7 @@ pydocstyle ==6.1.1
 
 isort ==5.9.3
 
-mypy ==0.910
+mypy ==0.920
 
 pre-commit >=1.18.2
 
