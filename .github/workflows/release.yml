@@ -19,6 +19,7 @@ jobs:
         id: release_please
         with:
           release-type: python
+          package-name: hashpipe
     outputs:
       release_created: ${{ steps.release_please.outputs.release_created }}
       sha: ${{ steps.release_please.outputs.sha }}
