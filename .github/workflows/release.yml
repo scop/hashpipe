@@ -5,7 +5,7 @@ on:
     workflows:
       - check
     branches:
-      - master
+      - main
     types:
       - completed
 
