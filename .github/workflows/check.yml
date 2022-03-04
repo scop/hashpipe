@@ -10,7 +10,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-python@v2
       - uses: actions/cache@v2
         with:
@@ -46,7 +46,7 @@ jobs:
           - python-version: "3.4"
             os: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
