@@ -176,7 +176,7 @@ def test_grouping() -> None:
         TestCase(
             key=bytes.fromhex("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"),
             data=b"Well, Hi There!",
-            pattern=re.compile(br"Well, (Hi There)"),
+            pattern=re.compile(rb"Well, (Hi There)"),
             algorithm="md5",
             result=(
                 "Well, %s!" % _format_hash(b"9294727a3638bb1c13f48ef8158bfc9d").decode()
@@ -185,7 +185,7 @@ def test_grouping() -> None:
         TestCase(
             key=bytes.fromhex("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"),
             data=b"Well, Hi There!",
-            pattern=re.compile(br"(?P<name_ignored>Hi There)"),
+            pattern=re.compile(rb"(?P<name_ignored>Hi There)"),
             algorithm="md5",
             result=(
                 "Well, %s!" % _format_hash(b"9294727a3638bb1c13f48ef8158bfc9d").decode()
@@ -194,7 +194,7 @@ def test_grouping() -> None:
         TestCase(
             key=bytes.fromhex("0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b"),
             data=b"Well, Hi There!",
-            pattern=re.compile(br"\b(Hi There)\b"),
+            pattern=re.compile(rb"\b(Hi There)\b"),
             algorithm="sha1",
             result=(
                 "Well, %s!"
