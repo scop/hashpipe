@@ -14,7 +14,7 @@ repos:
           - #
             pyflakes ==2.4.0
           - #
-            flake8-bandit ==2.1.2
+            flake8-bandit ==3.0.0
           - #
             bandit ==1.7.0
           - #
