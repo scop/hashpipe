@@ -39,7 +39,7 @@ jobs:
           - "3.9"
           - "3.10"
           - "3.11.0-alpha - 3.11"
-          - "pypy3"
+          - "pypy-3.9"
         include:
           - python-version: "3.3"
             os: ubuntu-18.04
@@ -72,7 +72,7 @@ jobs:
               tox --skip-missing-interpreters false -e py$(
                   # "s/^.* //" for cases like "3.10.0-alpha - 3.10"
                   echo "${{ matrix.python-version }}" | \
-                      sed -e "s/^.* //" -e "s/\.//" -e s/^py//
+                      sed -e "s/^.* //" -e "s/\.//" -e "s/^pypy-3.*/py3/"
               )
               codecov -X gcov
           fi
