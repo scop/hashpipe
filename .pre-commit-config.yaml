@@ -10,7 +10,7 @@ repos:
       - id: flake8
         additional_dependencies:
           - #
-            pycodestyle ==2.8.0
+            pycodestyle ==2.9.1
           - #
             pyflakes ==2.4.0
           - #
