@@ -23,6 +23,8 @@ repos:
             flake8-docstrings ==1.6.0
           - #
             pydocstyle ==6.1.1
+          - #
+            flake8-noqa ==1.2.9
 
   - repo: https://github.com/PyCQA/isort
     rev: 5.9.3
