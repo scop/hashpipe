@@ -1,6 +1,7 @@
 {
   "extends": [
     "config:base",
+    ":enablePreCommit",
     ":prConcurrentLimit20",
     ":preserveSemverRanges"
   ],
@@ -11,9 +12,6 @@
     "fileMatch": [
       "(^|/)(requirements[\\w-]*\\.txt|\\.pre-commit-config\\.yaml)$"
     ]
-  },
-  "pre-commit": {
-    "enabled": true
   },
   "packageRules": [
     {
