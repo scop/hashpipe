@@ -4,9 +4,7 @@
     ":prConcurrentLimit20",
     ":preserveSemverRanges"
   ],
-  "ignorePresets": [
-    ":dependencyDashboard"
-  ],
+  "ignorePresets": [":dependencyDashboard"],
   "semanticCommits": "enabled",
   "commitMessageTopic": "{{depName}}",
   "pip_requirements": {
