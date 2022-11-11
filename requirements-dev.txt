@@ -21,4 +21,4 @@ pylint ==2.14.3
 
 python-language-server
 
-pyupgrade ==2.24.0
+pyupgrade ==2.38.4
