@@ -9,4 +9,6 @@ target-version = [
   "py39",
   "py310",
   "py311",
+  # TODO: "py312" when supported
+
 ]
