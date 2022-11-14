@@ -14,7 +14,7 @@ flake8-noqa ==1.2.9
 
 isort ==5.9.3
 
-mypy ==0.990
+mypy ==0.991
 
 pre-commit >=1.18.2
 
