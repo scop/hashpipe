@@ -12,7 +12,7 @@ repos:
           - #
             pycodestyle ==2.10.0
           - #
-            pyflakes ==3.0.0
+            pyflakes ==3.0.1
           - #
             flake8-bandit ==4.1.1
           - #
