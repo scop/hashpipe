@@ -1,21 +1,15 @@
 name: release
 
 on:
-  workflow_run:
-    workflows:
-      - check
+  push:
     branches:
       - main
-    types:
-      - completed
 
 jobs:
   release_please:
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
     steps:
-      - uses: actions/checkout@v3
-      - uses: GoogleCloudPlatform/release-please-action@v3
+      - uses: google-github-actions/release-please-action@v3
         id: release_please
         with:
           release-type: python
@@ -35,7 +29,7 @@ jobs:
           ref: ${{ needs.release_please.outputs.sha }}
       - uses: actions/setup-python@v3
         with:
-          python-version: "3.9"
+          python-version: "3.10"
       - name: Create release assets
         run: |
           set -euxo pipefail
