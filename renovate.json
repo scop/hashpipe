@@ -26,8 +26,7 @@
     {
       "matchPackagePatterns": ["(^|/)black$"],
       "groupName": "black",
-      "versioning": "pep440",
-      "ignoreUnstable": false
+      "versioning": "pep440"
     },
     {
       "matchPackagePatterns": ["(^|/)flake8$"],
