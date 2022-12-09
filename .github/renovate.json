@@ -4,9 +4,13 @@
     "config:base",
     ":enablePreCommit",
     ":prConcurrentLimit20",
-    ":preserveSemverRanges"
+    ":preserveSemverRanges",
+    ":semanticPrefixChore"
   ],
-  "ignorePresets": [":dependencyDashboard"],
+  "ignorePresets": [
+    ":dependencyDashboard",
+    ":semanticPrefixFixDepsChoreOthers"
+  ],
   "semanticCommits": "enabled",
   "commitMessageTopic": "{{depName}}",
   "pip_requirements": {
