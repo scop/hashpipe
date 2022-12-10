@@ -69,9 +69,6 @@ jobs:
               tox -e py33  # no support for --skip-missing-interpreters false
           else
               python3 -m pip install -U tox codecov
-              # We could use tox-gh-actions for this, but that'd result in
-              # a whole separate redundant section of versions to maintain;
-              # with this approach the matrix alone is enough.
               tox --skip-missing-interpreters false -e py$(
                   # "s/^.* //" for cases like "3.10.0-alpha - 3.10"
                   echo "${{ matrix.python-version }}" | \
