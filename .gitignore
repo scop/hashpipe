@@ -2,8 +2,8 @@
 .cache/
 .coverage
 .eggs/
+.nox/
 .python-version
-.tox/
 __pycache__/
 build/
 dist/
