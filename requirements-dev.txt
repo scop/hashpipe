@@ -23,3 +23,5 @@ pylint ==2.15.5
 python-language-server
 
 pyupgrade ==3.2.2
+
+nox
