@@ -69,11 +69,11 @@ jobs:
               tox -e py33  # no support for --skip-missing-interpreters false
           else
               python3 -m pip install -U tox codecov
-              tox --skip-missing-interpreters false -e py$(
-                  # "s/^.* //" for cases like "3.10.0-alpha - 3.10"
-                  echo "${{ matrix.python-version }}" | \
-                      sed -e "s/^.* //" -e "s/\.//" -e "s/^pypy-3.*/py3/"
-              )
+              v="${{ matrix.python-version }}"
+              v=${v##* }            # "3.12.0-alpha - 3.12" -> "3.12"
+              v=${v/#pypy-3.*/py3}  # "pypy-3.9" -> "py3"
+              v=${v/./}             # "3.12" -> "312"
+              tox --skip-missing-interpreters false -e "py$v"
               codecov -X gcov
           fi
         env:
