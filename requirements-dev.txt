@@ -18,7 +18,7 @@ mypy ==0.990
 
 pre-commit >=1.18.2
 
-pylint ==2.15.5
+pylint ==2.16.1
 
 python-language-server
 
