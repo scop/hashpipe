@@ -135,7 +135,6 @@ def test_ref_nongrouping() -> None:
 
     for case in cases:
         for algorithm, hash_ in case.hashes.items():
-
             expected = _format_hash(hash_)
 
             hashpipe = Hashpipe(pattern=case.pattern, algorithm=algorithm, key=case.key)
@@ -204,7 +203,6 @@ def test_grouping() -> None:
     )
 
     for case in cases:
-
         hashpipe = Hashpipe(
             pattern=case.pattern, algorithm=case.algorithm, key=case.key
         )
@@ -231,7 +229,6 @@ def test_grouping() -> None:
 def test_prefixing() -> None:
     """Test prefixing."""
     for prefix in b"foo", b"foo:", b"":
-
         algorithm = "md5"
         data = b""
         key = b""
