@@ -2,5 +2,3 @@ pytest >=3
 pytest-cov
 
 setuptools
-
-typing; python_version <"3.5"
