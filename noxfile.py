@@ -4,7 +4,7 @@ import nox
 
 
 @nox.session(
-    python=["%s3.%s" % (py, x) for py in ("", "pypy") for x in range(3, 13)]
+    python=["%s3.%s" % (py, x) for py in ("", "pypy") for x in range(5, 13)]
     + ["pyston3"]
 )
 def test(session: nox.Session) -> None:

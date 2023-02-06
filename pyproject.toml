@@ -1,7 +1,5 @@
 [tool.black]
 target-version = [
-  "py33",
-  "py34",
   "py35",
   "py36",
   "py37",
