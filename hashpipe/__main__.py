@@ -1,6 +1,7 @@
-#!/usr/bin/python3 -u
+"""Hashpipe entry point.
 
-"""Hashpipe entry point."""
+Running with Python's `-u` flag or `PYTHONUNBUFFERED=1` in the environment recommended.
+"""
 
 from . import main
 
