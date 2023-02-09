@@ -2,7 +2,5 @@
 
 black ==23.1.0
 mypy ==0.990
-pre-commit >=1.18.2
-python-language-server
 nox
-ruff == 0.0.244
+ruff ==0.0.244
