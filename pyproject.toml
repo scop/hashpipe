@@ -10,3 +10,23 @@ target-version = [
   # TODO: "py312" when supported
 
 ]
+
+[tool.ruff]
+select = ["ALL"]
+ignore = [
+  "ANN", # Maybe sometime
+  "COM", # Black
+  "D203", # Black, ping/pong with D211
+  "D213", # Ping/pong with D212
+  #"E203", # Black, uncomment when/if ruff starts to support
+  "E501", # Black
+  "UP014", # Python >= 3.6
+  "UP032", # Python >= 3.6
+
+]
+unfixable = [
+  "T20",
+  "UP031", # Fixes with Python >= 3.6 f-strings
+
+]
+target-version = "py37" # Oldest supported, need to mind older manually

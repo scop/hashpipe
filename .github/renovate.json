@@ -41,23 +41,14 @@
       "versioning": "pep440"
     },
     {
-      "matchPackagePatterns": ["(^|/)flake8$"],
-      "groupName": "flake8",
-      "versioning": "pep440"
-    },
     {
       "matchPackagePatterns": ["(^|/)gitlint$"],
       "groupName": "gitlint",
       "versioning": "pep440"
     },
     {
-      "matchPackagePatterns": ["(^|/)isort$"],
-      "groupName": "isort",
-      "versioning": "pep440"
-    },
-    {
-      "matchPackagePatterns": ["(^|/)pyupgrade$"],
-      "groupName": "pyupgrade",
+      "matchPackagePatterns": ["(^|/)ruff(-pre-commit)?$"],
+      "groupName": "ruff",
       "versioning": "pep440"
     }
   ]

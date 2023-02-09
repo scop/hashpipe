@@ -68,8 +68,7 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
         )
 
     def hash_matches(self, data: bytes) -> bytes:
-        """
-        Hash matches.
+        """Hash matches.
 
         Replace the first groups of regular expression matches in given text
         with their HMAC hex digests surrounded by angle brackets.
@@ -93,8 +92,7 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
 
 
 def _available_algorithms() -> Set[str]:
-    """
-    Get available algorithms for use in suggestions.
+    """Get available algorithms for use in suggestions.
 
     Algorithm names are case sensitive, but for many there is an all-lowercase
     spelling as well as some variants available. Keep only the all-lowercase
@@ -167,7 +165,7 @@ def main(
         """Convert argument to compiled pattern."""
         try:
             return re.compile(str.encode(arg))
-        except BaseException as err:
+        except (TypeError, re.error) as err:
             raise argparse.ArgumentTypeError(err) from err
 
     if any(x in sys.argv for x in ("-h", "--help")) or not any(
@@ -188,7 +186,7 @@ def main(
 
     if args.available_algorithms:
         for algo in sorted(_available_algorithms()):
-            print(algo)
+            print(algo)  # noqa: T201
         return
 
     hashpipe = Hashpipe(
