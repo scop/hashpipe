@@ -41,7 +41,6 @@
       "versioning": "pep440"
     },
     {
-    {
       "matchPackagePatterns": ["(^|/)gitlint$"],
       "groupName": "gitlint",
       "versioning": "pep440"
