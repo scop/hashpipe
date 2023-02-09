@@ -2,6 +2,5 @@
 
 black ==23.1.0
 mypy ==0.990
-python-language-server
 nox
 ruff == 0.0.244
