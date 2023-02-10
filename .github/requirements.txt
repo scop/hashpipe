@@ -1,0 +1,4 @@
+-r ../requirements-dev.txt
+
+gitlint ==0.18.0
+pre-commit >=1.18.2
