@@ -18,13 +18,6 @@
       "(^|/)(requirements[\\w-]*\\.txt|\\.pre-commit-config\\.yaml)$"
     ]
   },
-  "regexManagers": [
-    {
-      "fileMatch": ["^\\.github/workflows/check\\.yml$"],
-      "matchStrings": ["\\s(?<depName>[\\w-]+)==(?<currentValue>\\S+)"],
-      "datasourceTemplate": "pypi"
-    }
-  ],
   "packageRules": [
     {
       "matchFiles": ["requirements-test.txt"],
