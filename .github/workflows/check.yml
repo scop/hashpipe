@@ -14,7 +14,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - uses: actions/setup-python@v4
       - uses: actions/cache@v3
         with:
           path: |
