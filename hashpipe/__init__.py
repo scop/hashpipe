@@ -34,7 +34,7 @@ __version__ = "0.9.2"
 DEFAULT_ALGORITHM = "sha1"
 
 
-class Hashpipe:  # pylint: disable=too-few-public-methods
+class Hashpipe:
     """Hash pipe."""
 
     def __init__(
@@ -63,7 +63,7 @@ class Hashpipe:  # pylint: disable=too-few-public-methods
         return hmac.new(self.key, data, self._digestmod).digest()
 
     def _digest_hmac_digest(self, data: bytes) -> bytes:
-        return hmac.digest(  # type: ignore[attr-defined,no-any-return] # pylint: disable=no-member # 3.7+
+        return hmac.digest(  # type: ignore[attr-defined,no-any-return] # 3.7+
             self.key, data, self._digestname
         )
 
@@ -176,7 +176,7 @@ def main(
         )
 
     try:
-        import argcomplete  # type: ignore[import] # pylint: disable=import-outside-toplevel
+        import argcomplete  # type: ignore[import]
     except ImportError:
         pass
     else:
