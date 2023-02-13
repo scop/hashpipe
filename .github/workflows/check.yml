@@ -29,13 +29,8 @@ jobs:
           # venv due to mypy through pre-commit, venv-run
           python3 -m venv venv
           venv/bin/python3 -m pip install -Ur .github/requirements.txt
-      - name: Run gitlint
+      - run: venv/bin/gitlint --commits "origin/$GITHUB_BASE_REF..HEAD"
         if: github.event_name == 'pull_request'
-        run: |
-          set -euo pipefail
-          source venv/bin/activate
-          set -x
-          gitlint --commits "origin/$GITHUB_BASE_REF..HEAD"
       - uses: pre-commit/action@v3.0.0
 
   test:
