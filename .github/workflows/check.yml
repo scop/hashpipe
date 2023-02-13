@@ -18,8 +18,9 @@ jobs:
         with:
           path: |
             ~/.cache/pip
+            venv
           key: >-
-            ${{ runner.os }} pip
+            ${{ runner.os }} pip+venv
             ${{ hashFiles('requirements-dev.txt', 'requirements-test.txt',
                           '.github/requirements.txt') }}
       - name: Install dependencies
