@@ -17,8 +17,10 @@ repos:
         additional_dependencies:
           - #
             venv-run ==0.1.2
-        entry: venv-run mypy
+        entry: venv-run mypy . bin/hashpipe
         types: [python]
+        pass_filenames: false
+        require_serial: true
 
   - repo: https://github.com/jorisroovers/gitlint
     rev: v0.18.0
