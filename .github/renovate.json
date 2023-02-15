@@ -14,10 +14,15 @@
   "semanticCommits": "enabled",
   "commitMessageTopic": "{{depName}}",
   "pip_requirements": {
-    "fileMatch": [
-      "(^|/)(requirements[\\w-]*\\.txt|\\.pre-commit-config\\.yaml)$"
-    ]
+    "fileMatch": ["(^|/)requirements[\\w-]*\\.txt$"]
   },
+  "regexManagers": [
+    {
+      "fileMatch": ["^\\.pre-commit-config\\.yaml$"],
+      "matchStrings": ["(?<depName>[\\w-]+)(?<currentValue>==[a-z0-9.]+)"],
+      "datasourceTemplate": "pypi"
+    }
+  ],
   "packageRules": [
     {
       "matchFiles": ["requirements-test.txt"],
