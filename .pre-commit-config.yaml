@@ -15,7 +15,7 @@ repos:
         name: mypy
         language: python
         additional_dependencies:
-          - venv-run==0.1.2
+          - venv-run==0.2.0
         entry: venv-run mypy . bin/hashpipe
         types: [python]
         pass_filenames: false
