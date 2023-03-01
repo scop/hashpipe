@@ -91,7 +91,7 @@ class Hashpipe:
         return self.pattern.sub(_replace, data)
 
 
-def _available_algorithms() -> Set[str]:
+def _available_algorithms(**_: str) -> Set[str]:
     """Get available algorithms for use in suggestions.
 
     Algorithm names are case sensitive, but for many there is an all-lowercase
@@ -114,7 +114,7 @@ def _available_algorithms() -> Set[str]:
     return avail
 
 
-def main(
+def main(  # noqa: C901
     in_: Iterable[bytes] = sys.stdin.buffer, out: BinaryIO = sys.stdout.buffer
 ) -> None:
     """Run main entry point."""
@@ -127,7 +127,7 @@ def main(
         "-V", "--version", action="version", version="hashpipe %s" % __version__
     )
 
-    parser.add_argument(
+    key_arg = parser.add_argument(
         "-k",
         "--key",
         type=bytes.fromhex,
@@ -135,7 +135,7 @@ def main(
         help="HMAC key hex encoded, default is empty",
     )
 
-    parser.add_argument(
+    prefix_arg = parser.add_argument(
         "-p",
         "--prefix",
         type=str.encode,
@@ -151,8 +151,6 @@ def main(
         help="Digest algorithm to use, one of: %s"
         % ", ".join(sorted(_available_algorithms(), key=lambda x: x.lower())),
     )
-    # type ignore: argcomplete adds the "completer" attribute
-    algorithm_arg.completer = lambda **_: _available_algorithms()  # type: ignore[attr-defined]
 
     parser.add_argument(
         "-A",
@@ -168,10 +166,11 @@ def main(
         except (TypeError, re.error) as err:
             raise argparse.ArgumentTypeError(err) from err
 
+    regex_arg = None
     if any(x in sys.argv for x in ("-h", "--help")) or not any(
         x in sys.argv for x in ("-A", "--available-algorithms")
     ):
-        parser.add_argument(
+        regex_arg = parser.add_argument(
             "regex", type=pattern, metavar="REGEX", help="Regular expression to match"
         )
 
@@ -180,6 +179,17 @@ def main(
     except ImportError:
         pass
     else:
+
+        def _no_completion(**_: str) -> Iterable[str]:
+            return ()
+
+        # type ignores: argcomplete adds the "completer" attribute
+        algorithm_arg.completer = _available_algorithms  # type: ignore[attr-defined]
+        key_arg.completer = _no_completion  # type: ignore[attr-defined]
+        prefix_arg.completer = _no_completion  # type: ignore[attr-defined]
+        if regex_arg:
+            regex_arg.completer = _no_completion  # type: ignore[attr-defined]
+
         argcomplete.autocomplete(parser)
 
     args = parser.parse_args()
