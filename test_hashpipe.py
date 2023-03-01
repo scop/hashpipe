@@ -150,9 +150,7 @@ def test_ref_nongrouping() -> None:
             expected = _format_hash(hash_)
 
             hashpipe = Hashpipe(pattern=case.pattern, algorithm=algorithm, key=case.key)
-            assert (  # noqa: S101 # nosec: B101
-                hashpipe.hash_matches(case.data) == expected
-            )
+            assert hashpipe.hash_matches(case.data) == expected
 
             outbuf = BytesIO()
             with patch(
@@ -167,7 +165,7 @@ def test_ref_nongrouping() -> None:
                 ],
             ):
                 main(in_=(case.data,), out=outbuf)
-            assert outbuf.getvalue() == expected  # noqa: S101 # nosec: B101
+            assert outbuf.getvalue() == expected
 
 
 def test_grouping() -> None:
@@ -218,9 +216,7 @@ def test_grouping() -> None:
         hashpipe = Hashpipe(
             pattern=case.pattern, algorithm=case.algorithm, key=case.key
         )
-        assert (  # noqa: S101 # nosec: B101
-            hashpipe.hash_matches(case.data) == case.result
-        )
+        assert hashpipe.hash_matches(case.data) == case.result
 
         outbuf = BytesIO()
         with patch(
@@ -235,7 +231,7 @@ def test_grouping() -> None:
             ],
         ):
             main(in_=(case.data,), out=outbuf)
-        assert outbuf.getvalue() == case.result  # noqa: S101 # nosec: B101
+        assert outbuf.getvalue() == case.result
 
 
 def test_prefixing() -> None:
@@ -249,7 +245,7 @@ def test_prefixing() -> None:
         hashpipe = Hashpipe(
             pattern=re.compile(b".*"), algorithm=algorithm, key=key, prefix=prefix
         )
-        assert hashpipe.hash_matches(data) == expected  # noqa: S101 # nosec: B101
+        assert hashpipe.hash_matches(data) == expected
 
         outbuf = BytesIO()
         with patch(
@@ -266,7 +262,7 @@ def test_prefixing() -> None:
             ],
         ):
             main(in_=(b"",), out=outbuf)
-        assert outbuf.getvalue() == expected  # noqa: S101 # nosec: B101
+        assert outbuf.getvalue() == expected
 
 
 def test_invalid_cli_regex() -> None:
@@ -281,10 +277,8 @@ def test_available_algorithms() -> None:
     """Test finding available algorithms."""
     avail = _available_algorithms()
     # Some found?
-    assert avail  # noqa: S101 # nosec: B101
+    assert avail
     # Ones containing "with" have been excluded?
-    assert not any("with" in x for x in avail)  # noqa: S101 # nosec: B101
+    assert not any("with" in x for x in avail)
     # Non-lowercase variants have been excluded?
-    assert not any(  # noqa: S101 # nosec: B101
-        x.lower() in avail for x in avail if x != x.lower()
-    )
+    assert not any(x.lower() in avail for x in avail if x != x.lower())
