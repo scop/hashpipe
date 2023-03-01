@@ -19,7 +19,8 @@ ignore = [
   "D203", # Black, ping/pong with D211
   "D213", # Ping/pong with D212
   #"E203", # Black, uncomment when/if ruff starts to support
-  "E501", # Black
+  "E50", # Black
+  "E70", # Black
   "UP014", # Python >= 3.6
   "UP032", # Python >= 3.6
 
