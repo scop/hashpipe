@@ -151,8 +151,6 @@ def main(
         help="Digest algorithm to use, one of: %s"
         % ", ".join(sorted(_available_algorithms(), key=lambda x: x.lower())),
     )
-    # type ignore: argcomplete adds the "completer" attribute
-    algorithm_arg.completer = _available_algorithms  # type: ignore[attr-defined]
 
     parser.add_argument(
         "-A",
@@ -180,6 +178,8 @@ def main(
     except ImportError:
         pass
     else:
+        # type ignore: argcomplete adds the "completer" attribute
+        algorithm_arg.completer = _available_algorithms  # type: ignore[attr-defined]
         argcomplete.autocomplete(parser)
 
     args = parser.parse_args()
