@@ -91,7 +91,7 @@ class Hashpipe:
         return self.pattern.sub(_replace, data)
 
 
-def _available_algorithms() -> Set[str]:
+def _available_algorithms(**_: str) -> Set[str]:
     """Get available algorithms for use in suggestions.
 
     Algorithm names are case sensitive, but for many there is an all-lowercase
@@ -152,7 +152,7 @@ def main(
         % ", ".join(sorted(_available_algorithms(), key=lambda x: x.lower())),
     )
     # type ignore: argcomplete adds the "completer" attribute
-    algorithm_arg.completer = lambda **_: _available_algorithms()  # type: ignore[attr-defined]
+    algorithm_arg.completer = _available_algorithms  # type: ignore[attr-defined]
 
     parser.add_argument(
         "-A",
