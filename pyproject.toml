@@ -30,3 +30,6 @@ unfixable = [
 
 ]
 target-version = "py37" # Oldest supported, need to mind older manually
+
+[tool.ruff.per-file-ignores]
+"test_*.py" = ["S101"]
