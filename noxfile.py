@@ -9,7 +9,9 @@ import nox
 )
 def test(session: nox.Session) -> None:
     """Run tests."""
-    session.install("-r", "requirements-test.txt")
+    session.install(".", "-r", "requirements-test.txt")
+    session.run("hashpipe", "--version")
+    session.run("python3", "-m", "hashpipe", "--version")
     session.run(
         *"python3 -X dev -bb -m pytest --cov=hashpipe".split() + session.posargs
     )
