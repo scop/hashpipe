@@ -3,6 +3,6 @@
 
 """Hashpipe entry point."""
 
-import hashpipe
+from hashpipe.__main__ import main
 
-hashpipe.main()
+main()

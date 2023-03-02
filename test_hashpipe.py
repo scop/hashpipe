@@ -8,7 +8,8 @@ from unittest.mock import patch
 
 import pytest
 
-from hashpipe import Hashpipe, _available_algorithms, main
+from hashpipe import Hashpipe
+from hashpipe.__main__ import _available_algorithms, main
 
 
 def _format_hash(hash_: bytes, prefix: bytes = b"") -> bytes:
