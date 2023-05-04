@@ -96,7 +96,7 @@ def main(  # noqa: C901
         )
 
     try:
-        import argcomplete  # type: ignore[import]
+        import argcomplete
     except ImportError:
         pass
     else:
