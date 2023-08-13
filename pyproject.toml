@@ -21,6 +21,7 @@ ignore = [
   #"E203", # Black, uncomment when/if ruff starts to support
   "E50", # Black
   "E70", # Black
+  "FA", # See what happens with PEP 649 impl first
   "UP014", # Python >= 3.6
   "UP032", # Python >= 3.6
 
