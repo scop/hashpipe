@@ -23,7 +23,8 @@ jobs:
             lint-${{ hashFiles(
               '.github/requirements.txt',
               'requirements-dev.txt',
-              'requirements-test.txt'
+              'requirements-test.txt',
+              'setup.cfg'
             ) }}
           restore-keys: lint-
       - name: Install dependencies
