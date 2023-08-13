@@ -1,3 +1,4 @@
+-e .[completion]
 -r requirements-test.txt
 
 black==23.1.0
