@@ -12,18 +12,26 @@ target-version = [
 ]
 
 [tool.ruff]
-select = ["ALL"]
+select = [
+  "ALL",
+  # E and W rules not covered by Black
+  "E71",
+  "E72",
+  "E73",
+  "E74",
+  "E9",
+  "W605",
+]
 ignore = [
   "ANN", # Maybe sometime
   "COM", # Black
   "D203", # Black, ping/pong with D211
   "D213", # Ping/pong with D212
-  #"E203", # Black, uncomment when/if ruff starts to support
-  "E50", # Black
-  "E70", # Black
+  "E", # Black, except ones in `select` above
   "FA", # See what happens with PEP 649 impl first
   "UP014", # Python >= 3.6
   "UP032", # Python >= 3.6
+  "W", # Black, except ones in `select` above
 
 ]
 unfixable = [
