@@ -24,7 +24,7 @@ jobs:
     needs: release_please
     if: needs.release_please.outputs.release_created
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ needs.release_please.outputs.sha }}
       - uses: actions/setup-python@v4
