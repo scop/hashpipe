@@ -1,38 +1,28 @@
-[tool.black]
-target-version = [
-  "py35",
-  "py36",
-  "py37",
-  "py38",
-  "py39",
-  "py310",
-  "py311",
-  # TODO: "py312" when supported
-
-]
-
 [tool.ruff]
-select = [
-  "ALL",
-  # E and W rules not covered by Black
-  "E71",
-  "E72",
-  "E73",
-  "E74",
-  "E9",
-  "W605",
-]
+select = ["ALL"]
 ignore = [
   "ANN", # Maybe sometime
-  "COM", # Black
-  "D203", # Black, ping/pong with D211
+  "D203", # Ping/pong with D211
   "D213", # Ping/pong with D212
-  "E", # Black, except ones in `select` above
   "FA", # See what happens with PEP 649 impl first
   "UP014", # Python >= 3.6
   "UP032", # Python >= 3.6
-  "W", # Black, except ones in `select` above
-
+  # https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
+  # (keep order of ignores here same as ^there for maintainability)
+  "W191",
+  "E111",
+  "E114",
+  "E117",
+  "D206",
+  "D300",
+  "Q000",
+  "Q001",
+  "Q002",
+  "Q003",
+  "COM812",
+  "COM819",
+  "ISC001",
+  "ISC002",
 ]
 unfixable = [
   "T20",
