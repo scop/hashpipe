@@ -5,6 +5,8 @@
 /.eggs/
 /.nox/
 /.python-version
+/.rtx.*.local.toml
+/.rtx.local.toml
 /build/
 /dist/
 /pip-wheel-metadata/
