@@ -1,0 +1,10 @@
+{
+  "packages": {
+    ".": {
+      "package-name": "hashpipe",
+      "release-type": "python",
+      "include-component-in-tag": false
+    }
+  },
+  "pull-request-title-pattern": "chore: release${component} ${version}"
+}
