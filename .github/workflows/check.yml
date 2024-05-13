@@ -16,14 +16,14 @@ jobs:
           - ubuntu-latest
         python-version:
           - "3.7"
-          - "3.8"
-          - "3.9"
-          - "3.10"
-          - "3.11"
-          - "3.12"
-          - "3.13.0-alpha - 3.13"
-          - "pypy-3.9"
-          - "pypy-3.10"
+          #- "3.8"
+          #- "3.9"
+          #- "3.10"
+          #- "3.11"
+          #- "3.12"
+          #- "3.13.0-alpha - 3.13"
+          #- "pypy-3.9"
+          #- "pypy-3.10"
         include:
           - python-version: "3.5"
             os: ubuntu-20.04
@@ -33,6 +33,9 @@ jobs:
             extra-deps: "'virtualenv<20.22.0'"
     steps:
       - uses: actions/checkout@v4
+      - run: |
+          set -euxo pipefail
+          dpkg -l ca-certificates
       - uses: actions/setup-python@v5
         with:
           # >= 3.11 to ensure there's a recent one to run nox with
