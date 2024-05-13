@@ -28,15 +28,12 @@ jobs:
           - python-version: "3.5"
             os: ubuntu-20.04
             extra-deps: "'virtualenv<20.22.0'"
+            env: PIP_CERT=/etc/ssl/cert/ca-certificates.crt
           - python-version: "3.6"
             os: ubuntu-20.04
             extra-deps: "'virtualenv<20.22.0'"
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          set -euxo pipefail
-          dpkg -l ca-certificates
-          ls /etc/ssl/certs/ -l
       - uses: actions/setup-python@v5
         with:
           # >= 3.11 to ensure there's a recent one to run nox with
@@ -44,8 +41,6 @@ jobs:
           python-version: |
             ${{ matrix.python-version }}
             >=3.11
-        env:
-          PIP_CERT: /etc/ssl/certs/ca-certificates.crt
       - uses: actions/cache@v3
         with:
           path: |
@@ -58,7 +53,6 @@ jobs:
           restore-keys: test-${{ runner.os }}-${{ matrix.python-version }}-
       - run: |
           set -euxo pipefail
-          dpkg -l ca-certificates
           python3 -m pip install -U nox codecov ${{ matrix.extra-deps }}
           v="${{ matrix.python-version }}"
           v=${v##* }  # "3.12.0-alpha - 3.12" -> "3.12"
