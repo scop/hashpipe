@@ -3,10 +3,10 @@
 /.cache/
 /.coverage
 /.eggs/
+/.mise.*.local.toml
+/.mise.local.toml
 /.nox/
 /.python-version
-/.rtx.*.local.toml
-/.rtx.local.toml
 /build/
 /dist/
 /pip-wheel-metadata/
