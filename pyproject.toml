@@ -1,4 +1,7 @@
 [tool.ruff]
+target-version = "py37" # Oldest supported, need to mind older manually
+
+[tool.ruff.lint]
 select = ["ALL"]
 ignore = [
   "ANN", # Maybe sometime
@@ -6,6 +9,7 @@ ignore = [
   "D213", # Ping/pong with D212
   "FA", # See what happens with PEP 649 impl first
   "UP014", # Python >= 3.6
+  "UP031", # Python >= 3.6
   "UP032", # Python >= 3.6
   # https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
   # (keep order of ignores here same as ^there for maintainability)
@@ -27,9 +31,7 @@ ignore = [
 unfixable = [
   "T20",
   "UP031", # Fixes with Python >= 3.6 f-strings
-
 ]
-target-version = "py37" # Oldest supported, need to mind older manually
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "test_*.py" = ["S101"]
