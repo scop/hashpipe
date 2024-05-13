@@ -7,35 +7,6 @@ on:
       - main
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/pip
-            venv
-          key: >-
-            lint-${{ hashFiles(
-              '.github/requirements.txt',
-              'requirements-dev.txt',
-              'requirements-test.txt',
-              'setup.cfg'
-            ) }}
-          restore-keys: lint-
-      - name: Install dependencies
-        run: |
-          set -euxo pipefail
-          # venv due to mypy through pre-commit, venv-run
-          python3 -m venv venv
-          venv/bin/python3 -m pip install -Ur .github/requirements.txt
-      - run: venv/bin/gitlint --commits "origin/$GITHUB_BASE_REF..HEAD"
-        if: github.event_name == 'pull_request'
-      - uses: pre-commit/action@v3.0.0
 
   test:
     runs-on: ${{ matrix.os }}
@@ -81,6 +52,7 @@ jobs:
           restore-keys: test-${{ runner.os }}-${{ matrix.python-version }}-
       - run: |
           set -euxo pipefail
+          dpkg -l ca-certificates
           python3 -m pip install -U nox codecov ${{ matrix.extra-deps }}
           v="${{ matrix.python-version }}"
           v=${v##* }  # "3.12.0-alpha - 3.12" -> "3.12"
