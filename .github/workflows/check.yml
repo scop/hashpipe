@@ -69,6 +69,11 @@ jobs:
           python-version: |
             ${{ matrix.python-version }}
             >=3.11
+        env:
+          # Use system CA certs for setup-python's auto upgrade of pip to work
+          # on older versions (e.g. 3.5) that do not have pypi.org CA certs in
+          # baseline pip's chain
+          PIP_CERT: /etc/ssl/certs/ca-certificates.crt
       - uses: actions/cache@v3
         with:
           path: |
