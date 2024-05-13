@@ -36,6 +36,7 @@ jobs:
       - run: |
           set -euxo pipefail
           dpkg -l ca-certificates
+          ls /etc/ssl/certs/ -l
       - uses: actions/setup-python@v5
         with:
           # >= 3.11 to ensure there's a recent one to run nox with
@@ -43,6 +44,8 @@ jobs:
           python-version: |
             ${{ matrix.python-version }}
             >=3.11
+        env:
+          PIP_CERT: /etc/ssl/certs/ca-certificates.crt
       - uses: actions/cache@v3
         with:
           path: |
