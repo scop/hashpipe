@@ -18,7 +18,7 @@ jobs:
         with:
           path: |
             ~/.cache/pip
-            venv
+            .venv
           key: >-
             lint-${{ hashFiles(
               '.github/requirements.txt',
@@ -31,9 +31,9 @@ jobs:
         run: |
           set -euxo pipefail
           # venv due to mypy through pre-commit, venv-run
-          python3 -m venv venv
-          venv/bin/python3 -m pip install -Ur .github/requirements.txt
-      - run: venv/bin/gitlint --commits "origin/$GITHUB_BASE_REF..HEAD"
+          python3 -m venv .venv
+          .venv/bin/python3 -m pip install -Ur .github/requirements.txt
+      - run: .venv/bin/gitlint --commits "origin/$GITHUB_BASE_REF..HEAD"
         if: github.event_name == 'pull_request'
       - uses: pre-commit/action@v3.0.0
 

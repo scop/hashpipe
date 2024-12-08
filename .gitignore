@@ -7,8 +7,8 @@
 /.mise.local.toml
 /.nox/
 /.python-version
+/.venv/
 /build/
 /dist/
 /pip-wheel-metadata/
-/venv/
 __pycache__/
