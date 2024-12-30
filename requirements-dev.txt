@@ -1,6 +1,6 @@
 -e .[completion]
 -r requirements-test.txt
 
-mypy==1.0.1
+mypy==1.14.1
 nox
 ruff==0.4.4
