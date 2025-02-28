@@ -27,7 +27,7 @@ from typing import Match, Pattern
 # for hmac.digest only available in 3.7+
 # mypy: no-warn-unused-ignores
 
-__version__ = "0.9.2"
+__version__ = "0.9.3"
 DEFAULT_ALGORITHM = "sha1"
 
 
