@@ -14,7 +14,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - uses: actions/cache@v3
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: |
             ~/.cache/pip
@@ -74,7 +74,7 @@ jobs:
           # on older versions (e.g. 3.5) that do not have pypi.org CA certs in
           # baseline pip's chain
           PIP_CERT: /etc/ssl/certs/ca-certificates.crt
-      - uses: actions/cache@v3
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: |
             ~/.cache/pip
