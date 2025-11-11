@@ -23,7 +23,7 @@ jobs:
     needs: release_please
     if: needs.release_please.outputs.release_created
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           ref: ${{ needs.release_please.outputs.sha }}
       - uses: actions/setup-python@v5
