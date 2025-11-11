@@ -9,7 +9,7 @@ jobs:
   release_please:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38 # v4
         id: release_please
         with:
           config-file: .github/release-please-config.json
@@ -23,10 +23,10 @@ jobs:
     needs: release_please
     if: needs.release_please.outputs.release_created
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
         with:
           ref: ${{ needs.release_please.outputs.sha }}
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.10"
       - name: Create release assets
@@ -35,6 +35,6 @@ jobs:
           python3 -m pip install -U setuptools wheel
           python3 setup.py sdist bdist_wheel
           ls dist
-      - uses: pypa/gh-action-pypi-publish@v1.4.2
+      - uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29 # v1.4.2
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}

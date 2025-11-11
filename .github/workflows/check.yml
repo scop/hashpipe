@@ -10,11 +10,11 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - uses: actions/cache@v3
+      - uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: |
             ~/.cache/pip
@@ -35,7 +35,7 @@ jobs:
           .venv/bin/python3 -m pip install -Ur .github/requirements.txt
       - run: .venv/bin/gitlint --commits "origin/$GITHUB_BASE_REF..HEAD"
         if: github.event_name == 'pull_request'
-      - uses: pre-commit/action@v3.0.0
+      - uses: pre-commit/action@646c83fcd040023954eafda54b4db0192ce70507 # v3.0.0
 
   test:
     runs-on: ${{ matrix.os }}
@@ -61,8 +61,8 @@ jobs:
             os: ubuntu-20.04
             extra-deps: "'virtualenv<20.22.0'"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           # >= 3.11 to ensure there's a recent one to run nox with
           # (assumption: last one listed ends up as "python3")
@@ -74,7 +74,7 @@ jobs:
           # on older versions (e.g. 3.5) that do not have pypi.org CA certs in
           # baseline pip's chain
           PIP_CERT: /etc/ssl/certs/ca-certificates.crt
-      - uses: actions/cache@v3
+      - uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: |
             ~/.cache/pip
