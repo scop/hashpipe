@@ -1,37 +1,52 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "github>scop/common",
+    "github>scop/common"
   ],
   "pip_requirements": {
-    "fileMatch": ["(^|/)requirements[\\w-]*\\.txt$"]
+    "managerFilePatterns": [
+      "/(^|/)requirements[\\w-]*\\.txt$/"
+    ]
   },
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": ["^\\.pre-commit-config\\.yaml$"],
-      "matchStrings": ["(?<depName>[\\w-]+)(?<currentValue>==[a-z0-9.]+)"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.pre-commit-config\\.yaml$/"
+      ],
+      "matchStrings": [
+        "(?<depName>[\\w-]+)(?<currentValue>==[a-z0-9.]+)"
+      ],
       "datasourceTemplate": "pypi"
     }
   ],
   "packageRules": [
     {
-      "matchFiles": ["requirements-test.txt"],
+      "matchFileNames": [
+        "requirements-test.txt"
+      ],
       "semanticCommitType": "test"
     },
     {
-      "matchManagers": ["pre-commit"],
+      "matchManagers": [
+        "pre-commit"
+      ],
       "commitMessageTopic": "{{depName}}",
       "semanticCommitScope": "pre-commit"
     },
     {
-      "matchPackagePatterns": ["(^|/)gitlint$"],
       "groupName": "gitlint",
-      "versioning": "pep440"
+      "versioning": "pep440",
+      "matchPackageNames": [
+        "/(^|/)gitlint$/"
+      ]
     },
     {
-      "matchPackagePatterns": ["(^|/)ruff(-pre-commit)?$"],
       "groupName": "ruff",
-      "versioning": "pep440"
+      "versioning": "pep440",
+      "matchPackageNames": [
+        "/(^|/)ruff(-pre-commit)?$/"
+      ]
     }
   ]
 }
