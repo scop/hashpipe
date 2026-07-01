@@ -62,7 +62,7 @@ jobs:
             extra-deps: "'virtualenv<20.22.0'"
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           # >= 3.11 to ensure there's a recent one to run nox with
           # (assumption: last one listed ends up as "python3")
