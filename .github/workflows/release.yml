@@ -35,6 +35,6 @@ jobs:
           python3 -m pip install -U setuptools wheel
           python3 setup.py sdist bdist_wheel
           ls dist
-      - uses: pypa/gh-action-pypi-publish@v1.4.2
+      - uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
